@@ -1,7 +1,7 @@
 
 
 
-one_resample_analysis_check = function(platzhalter, y.iid, L, nscore.obj, coords, max.dist, nbins, threshold){
+one_resample_analysis_check = function(platzhalter, y.iid, L, nscore.obj, coords, max.dist, nbins, threshold = 1.2){
   # (6) resampling from y.iid
   resmpl = sample(y.iid, size = length(y.iid), replace = T)
 
