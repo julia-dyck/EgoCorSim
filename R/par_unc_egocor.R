@@ -1,4 +1,4 @@
-#' Semi-variogram parameter uncertainty
+#' Semi-variogram parameter uncertainty with filtered bootstrapping
 #'
 #' Standard error estimates for the nugget effect \eqn{c_0},  partial sill \eqn{\sigma_0^2} and
 #' shape parameter \eqn{\phi} of a fitted exponential semi-variogram model.
