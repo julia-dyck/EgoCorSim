@@ -25,10 +25,10 @@ one_resample_analysis_check = function(platzhalter, y.iid, L, nscore.obj, coords
   nr.thr = length(threshold)
   wls.threshold.outcomes = numeric(length = 3*nr.thr)
   for(i in 1:nr.thr){
-    if(mod.var > threshold[i]*emp.var){
+    if(mod.var > threshold[i]*emp.var|mod.var <= 0){
       wls.threshold.outcomes[(i-1)*3+(1:3)] = rep(NA, 3)
     }
-    else{
+    if(mod.var <= threshold[i]*emp.var & mod.var > 0){
       wls.threshold.outcomes[(i-1)*3+(1:3)] = wls.est
     }
   }
