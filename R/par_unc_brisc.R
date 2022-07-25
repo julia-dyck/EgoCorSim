@@ -1,9 +1,23 @@
-par_uncertainty_brisc = function(BRISC_Out, n_boot = 1000, h = 1, n_omp = 1,
+#' Semi-variogram parameter uncertainty - BRISC
+#'
+#' @param BRISC_Out
+#' @param n_boot
+#' @param h
+#' @param n_omp
+#' @param init
+#' @param verbose
+#' @param nugget_status
+#'
+#' @return
+#' @export
+#'
+#' @examples
+par_uncertainty_brisc = function(BRISC_Out, B = 1000, h = 1, n_omp = 1,
                                  init = "Initial", verbose = TRUE,
                                  nugget_status = 1){
   sds = tryCatch(
     expr = {
-      boot = BRISC_bootstrap(BRISC_Out = BRISC_Out, n_boot = n_boot, h = h, n_omp = n_omp,
+      boot = BRISC::BRISC_bootstrap(BRISC_Out = BRISC_Out, n_boot = B, h = h, n_omp = n_omp,
                              init = init, verbose = verbose,
                              nugget_status = nugget_status)
       boot.pars = boot$boot.Theta
