@@ -1,4 +1,22 @@
-par_unc_q = function(sample.geo, max.dist, B=1000, qu=seq(from=0.75,to=1,by=0.05)){
+#' Semi-variogram parameter uncertainty - Quantile method
+#'
+#' @param sample.geo
+#' @param max.dist
+#' @param B
+#' @param qu
+#'
+#' @return
+#' @export
+#'
+#' @examples
+
+sample.geo = birth
+max.dist = 800
+B = 1000
+qu=seq(from=0.75,to=1,by=0.05)
+nbins = 10
+
+par_unc_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu=seq(from=0.75,to=1,by=0.05)){
 
   # INPUT VARIABLES
   # sample.geo = a data set of class geo.data
@@ -7,40 +25,63 @@ par_unc_q = function(sample.geo, max.dist, B=1000, qu=seq(from=0.75,to=1,by=0.05
   # qu = quantile up to which the bootstrap-resamples go into the parameter estimation
   ### note: the total nr. of bootstrap estimates calculated within the process is B/qu
   ### filtering, which resamples are included in the sd calculation is based on the quantile
-  coords = sample.geo[[1]]
-  z = sample.geo[[2]]
+
+  sample.geo = stats::na.omit(as.data.frame(sample.geo[,1:3]))
+  colnames(sample.geo)[1:2] = c("x", "y")
+  sp::coordinates(sample.geo) = ~x+y
+  coords = sp::coordinates(sample.geo)
+  z = sample.geo[[1]]
 
   # (1) nscore transformation
   nscore.obj = nscore(z)
   y = nscore.obj$nscore
-  y.with.coords = cbind(coords,y)
-  y.geo = as.geodata(y.with.coords)
+  y.geo = as.data.frame(cbind(coords,y))
+  sp::coordinates(y.geo) = ~x+y
+
   # (2) prep sv-model
-  emp.sv = variog(y.geo, estimator.type="classical", max.dist = max.dist, uvec = 10, messages=F)
-  ini.partial.sill <- var(y.geo[[2]])
-  ini.shape <- emp.sv$max.dist/3
-  ini.values <- c(ini.partial.sill, ini.shape)
-  sv.mod <- variofit(emp.sv, ini.cov.pars = ini.values, cov.model = "exponential")
-  mod.pars = c(sv.mod$nugget, sv.mod$cov.pars[1],sv.mod$cov.pars[2])
+  emp.sv = gstat::variogram(object = y.geo[[1]] ~ 1, data = y.geo, cutoff = max.dist, width = max.dist / nbins)
+  ini.partial.sill <- stats::var(y.geo[[1]])
+  ini.shape <- max(emp.sv$dist)/3
+
+  v = gstat::vgm(psill = ini.partial.sill, model = "Exp", range = ini.shape, nugget = 0)
+  sv.mod = gstat::fit.variogram(emp.sv, model = v,  # fitting the model with starting model
+                                fit.sills = TRUE,
+                                fit.ranges = TRUE,
+                                debug.level = 1, warn.if.neg = FALSE, fit.kappa = FALSE)
+
+  mod.pars = c(sv.mod$psill[1], sv.mod$psill[2], sv.mod$range[2])
   # (3)
-  Dist_mat = dist1(coords) # NxN distance matrix
-  Cov_mat = cov.spatial(Dist_mat, cov.model=c("exponential","pure.nugget"),
-                        cov.pars = rbind(c(mod.pars[2],mod.pars[3]),c(mod.pars[1],0)))
+  Dist_mat = SpatialTools::dist1(coords) # NxN distance matrix
+
+  # function for predicting the covariance based on distance
+  expmod = function(distvec, psill, phi){
+    return(psill*exp(-distvec/phi))
+  }
+
+  Cov_mat = apply(X = Dist_mat, MARGIN = 1, FUN = expmod, psill = mod.pars[2], phi = mod.pars[3])
+
   # NxN Covariance matrix, contains all point-pairs' estimated Covariances
   # based on sv.mod
   # (4) Cholesky decomposition -> fertige Fkt. existieren
+
+  # Adding diag(epsilon) on the diagonal to force it to be positve definite (numerical reasons)
+  Cov_mat = Cov_mat + diag(rep(1e-7, nrow(sample.geo)))
+
   L = t(chol(Cov_mat))
   # (5) transform y in an iid sample
   y.iid = solve(L)%*%y
 
   # (6),(7),(8) and (10)
   qu.min = qu[1]
-  par.est = t(replicate(ceiling(B/qu.min),one.resample.analysis(platzhalter = NULL, y.iid=y.iid,
+  par.est = t(replicate(ceiling(B/qu.min),one_resample_analysis_check(platzhalter = NULL, y.iid=y.iid,
                                                                 L=L, nscore.obj = nscore.obj,
-                                                                coords = coords, max.dist = max.dist)))
+                                                                coords = coords, max.dist = max.dist,
+                                                                nbins = nbins)))
   # 1. col = nugget estimates
   # 2. col = partial.sill estimates
   # 3. col = phi estimates
+
+#  NA's raus?
 
   # threshold: qu.min quantile
   sds=c(sd((par.est[,1][order(par.est[,1])])[1:B]),
