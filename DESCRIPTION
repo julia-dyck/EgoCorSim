@@ -1,12 +1,28 @@
 Package: EgoCorSim
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+Authors@R: c(
+    person("Julia", "Dyck", , "j.dyck@uni-bielefeld.de", role = c("aut", "cre")),
+    person("Odile", "Sauzet", role = "aut"),
+    person("Jan-Ole", "Koslik", role = "aut")
+  )
 Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
+Imports: 
+    graphics,
+    grDevices,
+    gstat,
+    Rdpack,
+    shiny,
+    sp,
+    SpatialTools,
+    stats,
+    BRISC
+Suggests:
+    knitr,
+    rmarkdown,
+    lme4
