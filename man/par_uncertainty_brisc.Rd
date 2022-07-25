@@ -6,7 +6,7 @@
 \usage{
 par_uncertainty_brisc(
   BRISC_Out,
-  n_boot = 1000,
+  B = 1000,
   h = 1,
   n_omp = 1,
   init = "Initial",

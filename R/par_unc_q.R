@@ -9,13 +9,6 @@
 #' @export
 #'
 #' @examples
-
-sample.geo = birth
-max.dist = 800
-B = 1000
-qu=seq(from=0.75,to=1,by=0.05)
-nbins = 10
-
 par_unc_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu=seq(from=0.75,to=1,by=0.05)){
 
   # INPUT VARIABLES

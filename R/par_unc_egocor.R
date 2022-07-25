@@ -82,33 +82,7 @@
 #' \item{re_estimates}{A matrix with B rows containing the set of bootstrap re-estimates for each parameter.}
 #' \item{re_estimate.mean}{A vector containing the mean parameter estimates based on the set of bootstrap re-estimates for each parameter.}
 #' \item{call}{The function call.}
-#'
-#'
-#'
-#' @examples
-#' ## Example 1
-#' # Estimate semi-variogram models:
-#' mods = vario.mod(data = birth, max.dist = c(1000,600), nbins = 13,
-#'                  shinyresults = FALSE, windowplots = FALSE)
-#' print(mods$infotable)
-#'
-#' # Estimate the parameter standard errors:
-#' \donttest{
-#' se.mod1 = par.uncertainty(vario.mod.output = mods, mod.nr = 1, B = 1000)
-#' se.mod2 = par.uncertainty(vario.mod.output = mods, mod.nr = 2, B = 1000)
-#' }
-#'
-#' ## Example 2
-#' # Type in the specifications of the estimated exponential semi-variogram manually:
-#' \donttest{
-#' se.mod1.man = par.uncertainty(par.est = c(1021.812, 225440.3, 0),
-#'               data = birth, max.dist = 1000, nbins = 13, B = 1000)
-#'
-#' se.mod2.man = par.uncertainty(par.est = c(121895.486, 107232.6, 63.68720),
-#'               data = birth, max.dist = 600, nbins = 13, B = 1000)
-#' }
-#'
-#'
+
 #' @references
 #'   \insertAllCited{}
 #'

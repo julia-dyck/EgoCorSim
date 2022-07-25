@@ -7,6 +7,7 @@
 par_unc_q(
   sample.geo,
   max.dist,
+  nbins = 10,
   B = 1000,
   qu = seq(from = 0.75, to = 1, by = 0.05)
 )
