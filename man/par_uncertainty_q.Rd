@@ -4,13 +4,7 @@
 \alias{par_uncertainty_q}
 \title{Semi-variogram parameter uncertainty - Quantile method}
 \usage{
-par_uncertainty_q(
-  sample.geo,
-  max.dist,
-  nbins = 10,
-  B = 1000,
-  qu = seq(from = 0.75, to = 1, by = 0.05)
-)
+par_uncertainty_q(sample.geo, max.dist, nbins = 10, B = 1000, alpha = 0.75)
 }
 \arguments{
 \item{qu}{}
