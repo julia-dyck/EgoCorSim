@@ -82,8 +82,6 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu=seq(fr
   # 2. col = partial.sill estimates
   # 3. col = phi estimates
 
-#  NA's raus?
-
   # threshold: qu.min quantile
   sds=c(sd((par.est[,1][order(par.est[,1])])[1:B]),
         sd((par.est[,2][order(par.est[,2])])[1:B]),
