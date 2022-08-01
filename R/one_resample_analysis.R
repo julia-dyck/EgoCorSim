@@ -14,5 +14,11 @@ one_resample_analysis = function(platzhalter, y.iid, L, nscore.obj, coords, max.
 
   # (10) semivariogram model estimation, wls
   wls.est = sv.sep(resmpl, coords = coords, max.dist = max.dist)
-  return(wls.est)
+
+  if (sum(wls.est < 0) == 0){
+    return(wls.est)
+  }
+  else {
+    return(c(NA,NA,NA))
+  }
 }
