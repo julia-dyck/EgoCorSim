@@ -90,9 +90,12 @@
 
 
 
-par_unc_egocor = function(vario.mod.output, mod.nr,
+par_unc_check= function(vario.mod.output, mod.nr,
                            par.est = NULL, data= NULL, max.dist=NULL,nbins=NULL,
                            B = 1000, threshold.factor = 1.2){
+
+  # einfach nur par.uncertainty nutzen
+
 
   vario.mod.output.arg <- deparse(substitute(vario.mod.output))
   mod.nr.arg <- deparse(substitute(mod.nr))
