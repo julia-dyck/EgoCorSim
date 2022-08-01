@@ -58,7 +58,7 @@ par_unc_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu=seq(from=0.75,
   # (4) Cholesky decomposition -> fertige Fkt. existieren
 
   # Adding diag(epsilon) on the diagonal to force it to be positve definite (numerical reasons)
-  Cov_mat = Cov_mat + diag(rep(1e-7, nrow(sample.geo)))
+  Cov_mat = Cov_mat + diag(rep(1e-8, nrow(sample.geo)))
 
   L = t(chol(Cov_mat))
   # (5) transform y in an iid sample
@@ -66,7 +66,15 @@ par_unc_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu=seq(from=0.75,
 
   # (6),(7),(8) and (10)
   qu.min = qu[1]
-  par.est = t(replicate(ceiling(B/qu.min),one_resample_analysis_check(platzhalter = NULL, y.iid=y.iid,
+
+  # hier while schleife statt replicate
+  # Bschlange = B*1/qu.min
+  # while ... < Bschlange
+  # nr.restimates einen größer, wenn nicht na (wie in bootstrap_uncertainty_check)
+
+  # in one.resample.anaylsis: Check ob alle parameter >= 0 (wenn mind. 1 kleinr 0 --> NA)
+
+  par.est = t(replicate(ceiling(B/qu.min),one_resample_analysis(platzhalter = NULL, y.iid=y.iid,
                                                                 L=L, nscore.obj = nscore.obj,
                                                                 coords = coords, max.dist = max.dist,
                                                                 nbins = nbins)))
@@ -90,9 +98,9 @@ par_unc_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu=seq(from=0.75,
     sds = c(sds, c(sd((par.est.subsample[,1][order(par.est.subsample[,1])])[1:B]),
                    sd((par.est.subsample[,2][order(par.est.subsample[,2])])[1:B]),
                    sd((par.est.subsample[,3][order(par.est.subsample[,3])])[1:B])))
-    cis = c(cis, c(quantile((par.est.subsample[,1][order(par.est.subsample[,1])])[1:B], probs=c(0.025,0.975)),
-                   quantile((par.est.subsample[,2][order(par.est.subsample[,2])])[1:B], probs=c(0.025,0.975)),
-                   quantile((par.est.subsample[,3][order(par.est.subsample[,3])])[1:B], probs=c(0.025,0.975))))
+    cis = c(cis, c(quantile((par.est.subsample[,1][order(par.est.subsample[,1])])[1:B], probs=c(0.025,0.975), na.rm = TRUE),
+                   quantile((par.est.subsample[,2][order(par.est.subsample[,2])])[1:B], probs=c(0.025,0.975), na.rm = TRUE),
+                   quantile((par.est.subsample[,3][order(par.est.subsample[,3])])[1:B], probs=c(0.025,0.975), na.rm = TRUE)))
   }
   # # 95%-percentile bootstrap Confidence Intervals (pbCI) based on B resamples
   # ind = sample(1:ceiling(B/qu.min), size = B, replace=FALSE)
