@@ -22,3 +22,6 @@ Suggests:
     knitr,
     rmarkdown,
     lme4
+Depends: 
+    R (>= 2.10)
+LazyData: true
