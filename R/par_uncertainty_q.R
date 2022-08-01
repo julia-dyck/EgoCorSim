@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-par_unc_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu=seq(from=0.75,to=1,by=0.05)){
+par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu=seq(from=0.75,to=1,by=0.05)){
 
   # INPUT VARIABLES
   # sample.geo = a data set of class geo.data
