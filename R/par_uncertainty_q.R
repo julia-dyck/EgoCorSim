@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu=seq(from=0.75,to=1,by=0.05)){
+par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(from = 0.75, to = 1, by = 0.05)){
 
   # INPUT VARIABLES
   # sample.geo = a data set of class geo.data
@@ -26,7 +26,7 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu=seq(fr
   z = sample.geo[[1]]
 
   # (1) nscore transformation
-  nscore.obj = nscore(z)
+  nscore.obj = EgoCor:::nscore(z)
   y = nscore.obj$nscore
   y.geo = as.data.frame(cbind(coords,y))
   sp::coordinates(y.geo) = ~x+y
@@ -65,19 +65,27 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu=seq(fr
   y.iid = solve(L)%*%y
 
   # (6),(7),(8) and (10)
-  qu.min = qu[1]
 
-  # hier while schleife statt replicate
-  # Bschlange = B*1/qu.min
-  # while ... < Bschlange
-  # nr.restimates einen größer, wenn nicht na (wie in bootstrap_uncertainty_check)
+  B_tilde = ceiling(B/qu[1])
 
-  # in one.resample.anaylsis: Check ob alle parameter >= 0 (wenn mind. 1 kleinr 0 --> NA)
+  par.est = t(sapply(rep(0, B_tilde), FUN = one_resample_analysis, y.iid=y.iid,
+                     L=L, nscore.obj = nscore.obj, coords = coords, max.dist = max.dist,
+                     nbins = nbins))
 
-  par.est = t(replicate(ceiling(B/qu.min),one_resample_analysis(platzhalter = NULL, y.iid=y.iid,
-                                                                L=L, nscore.obj = nscore.obj,
-                                                                coords = coords, max.dist = max.dist,
-                                                                nbins = nbins)))
+  par.est = stats::na.omit(par.est)
+  nr_reestimates = length(stats::na.omit(par.est[,1]))
+
+  while(nr_reestimates < B_tilde){
+    next.est = one_resample_analysis(platzhalter = NULL, y.iid=y.iid,
+                                     L=L, nscore.obj = nscore.obj, coords = coords, max.dist = max.dist,
+                                     nbins = nbins)
+    if(!is.na(next.est[1])){
+      par.est = rbind(par.est, next.est)
+      nr_reestimates= nr_reestimates + 1
+    }
+
+  }
+
   # 1. col = nugget estimates
   # 2. col = partial.sill estimates
   # 3. col = phi estimates
@@ -91,7 +99,7 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu=seq(fr
         quantile((par.est[,1][order(par.est[,3])])[1:B], probs=c(0.025,0.975)))
   # thresholds: qu[2]-qu[max] (in increasing order)
   for(q in 2:length(qu)){
-    ind = sample(1:ceiling(B/qu.min), size = ceiling(B/qu[q]), replace=FALSE)
+    ind = sample(1:ceiling(B/qu[1]), size = ceiling(B/qu[q]), replace=FALSE)
     par.est.subsample = par.est[ind,]
     sds = c(sds, c(sd((par.est.subsample[,1][order(par.est.subsample[,1])])[1:B]),
                    sd((par.est.subsample[,2][order(par.est.subsample[,2])])[1:B]),
