@@ -83,7 +83,6 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
       par.est = rbind(par.est, next.est)
       nr_reestimates= nr_reestimates + 1
     }
-
   }
 
   # 1. col = nugget estimates
