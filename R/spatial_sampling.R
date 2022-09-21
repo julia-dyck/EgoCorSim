@@ -1,8 +1,8 @@
-#' Spatial Sampling function
+#' Function for spatial sampling from complete realization
 #'
-#' @param cr
-#' @param N
-#' @param nr_divisions
+#' @param cr complete realization
+#' @param N Number of samples
+#' @param nr_divisions Number of subdivisions: Choose between 1, 4, 9
 #'
 #' @return
 #' @export

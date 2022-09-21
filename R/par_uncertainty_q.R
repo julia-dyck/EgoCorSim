@@ -1,9 +1,9 @@
 #' Semi-variogram parameter uncertainty - Quantile method
 #'
-#' @param sample.geo
-#' @param max.dist
-#' @param B
-#' @param qu
+#' @param sample.geo A spatial sample
+#' @param max.dist Maximum distance included in the estimation
+#' @param B Number of bootstrap samples
+#' @param qu Sequence of quantiles
 #'
 #' @return
 #' @export

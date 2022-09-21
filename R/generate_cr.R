@@ -1,4 +1,4 @@
-#' Title
+#' Generate a complete realization
 #'
 #' @return
 #' @export

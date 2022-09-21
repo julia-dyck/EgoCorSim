@@ -4,10 +4,22 @@
 \alias{par_uncertainty_q}
 \title{Semi-variogram parameter uncertainty - Quantile method}
 \usage{
-par_uncertainty_q(sample.geo, max.dist, nbins = 10, B = 1000, alpha = 0.75)
+par_uncertainty_q(
+  sample.geo,
+  max.dist,
+  nbins = 10,
+  B = 1000,
+  qu = seq(from = 0.75, to = 1, by = 0.05)
+)
 }
 \arguments{
-\item{qu}{}
+\item{sample.geo}{A spatial sample}
+
+\item{max.dist}{Maximum distance included in the estimation}
+
+\item{B}{Number of bootstrap samples}
+
+\item{qu}{Sequence of quantiles}
 }
 \description{
 Semi-variogram parameter uncertainty - Quantile method

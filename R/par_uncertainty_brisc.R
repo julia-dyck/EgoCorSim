@@ -1,7 +1,7 @@
 #' Semi-variogram parameter uncertainty - BRISC
 #'
-#' @param BRISC_Out
-#' @param n_boot
+#' @param BRISC_Out An Object created by BRISC_estimation
+#' @param B Number of bootstrap samples
 #' @param h
 #' @param n_omp
 #' @param init

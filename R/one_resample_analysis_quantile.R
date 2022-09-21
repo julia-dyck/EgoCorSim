@@ -1,4 +1,3 @@
-
 one_resample_analysis = function(platzhalter, y.iid, L, nscore.obj, coords, max.dist, nbins){
   # (6) resampling from y.iid
   resmpl = sample(y.iid, size = length(y.iid), replace = T)
