@@ -2,10 +2,10 @@
 % Please edit documentation in R/generate_cr.R
 \name{generate_cr}
 \alias{generate_cr}
-\title{Title}
+\title{Generate a complete realization}
 \usage{
 generate_cr()
 }
 \description{
-Title
+Generate a complete realization
 }
