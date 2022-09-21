@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-function(cr, N, nr_divisions){
+spatial_sampling = function(cr, N, nr_divisions){
   # cr = complete realizaiton, which is the set to sample from
   # D_range used in complete.realization.fct to create cr
   d = 10000
@@ -37,6 +37,6 @@ function(cr, N, nr_divisions){
     sample.index4 = sample(sub.ind4, size = N/4, replace = F)
     sp.sample = cr[c(sample.index1, sample.index2, sample.index3, sample.index4),]
   }
-  sp.sample = as.geodata(sp.sample)
+
   return(sp.sample)
 }
