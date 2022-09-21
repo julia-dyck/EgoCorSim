@@ -42,3 +42,24 @@ maxdist = max(mod$variog.list[[1]]$dist)
 mod_brisc = BRISC_estimation(coords = birth[,1:2], y = birth$birthweight,
                        sigma.sq = var(birth$birthweight), tau.sq = 0, phi = 1/(maxdist/3))
 View(BRISC_estimation)
+
+
+# Testing sampling --------------------------------------------------------
+
+library(EgoCor)
+
+sample = spatial_sampling(cr, 1000, 9)
+coords.plot(sample)
+
+help(package = "BRISC")
+
+library(BRISC)
+
+coords = cbind(sample$coords.x1, sample$coords.x2)
+
+estimation_result = BRISC_estimation(coords, y = sample[,3])
+
+par_uncertainty_brisc(estimation_result)
+
+
+
