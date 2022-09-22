@@ -93,9 +93,7 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
   sds=c(sd((par.est[,1][order(par.est[,1])])[1:B]),
         sd((par.est[,2][order(par.est[,2])])[1:B]),
         sd((par.est[,3][order(par.est[,3])])[1:B]))
-  cis=c(quantile((par.est[,1][order(par.est[,1])])[1:B], probs=c(0.025,0.975)),
-        quantile((par.est[,1][order(par.est[,2])])[1:B], probs=c(0.025,0.975)),
-        quantile((par.est[,1][order(par.est[,3])])[1:B], probs=c(0.025,0.975)))
+
   # thresholds: qu[2]-qu[max] (in increasing order)
   for(q in 2:length(qu)){
     ind = sample(1:ceiling(B/qu[1]), size = ceiling(B/qu[q]), replace=FALSE)
@@ -103,9 +101,6 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
     sds = c(sds, c(sd((par.est.subsample[,1][order(par.est.subsample[,1])])[1:B]),
                    sd((par.est.subsample[,2][order(par.est.subsample[,2])])[1:B]),
                    sd((par.est.subsample[,3][order(par.est.subsample[,3])])[1:B])))
-    cis = c(cis, c(quantile((par.est.subsample[,1][order(par.est.subsample[,1])])[1:B], probs=c(0.025,0.975), na.rm = TRUE),
-                   quantile((par.est.subsample[,2][order(par.est.subsample[,2])])[1:B], probs=c(0.025,0.975), na.rm = TRUE),
-                   quantile((par.est.subsample[,3][order(par.est.subsample[,3])])[1:B], probs=c(0.025,0.975), na.rm = TRUE)))
   }
   # # 95%-percentile bootstrap Confidence Intervals (pbCI) based on B resamples
   # ind = sample(1:ceiling(B/qu.min), size = B, replace=FALSE)
@@ -115,8 +110,7 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
   #          quantile(par.est.subsample[,3], probs = c(0.025, 0.975)))
 
   names(sds) = paste0(rep(c("n.sd","s.sd","p.sd"),length(qu)), as.vector(sapply(qu*100,rep, times=3)))
-  names(cis) = paste0(c(rep("n",2),rep("s",2),rep("p",2)), ".ci",c("l","u"),as.vector(sapply(qu*100,rep, times=6)))
 
   #return(list(mod.pars=mod.pars, sds = sds, resample.ests = par.est, pbCI=pbCI))
-  return(list(sds = sds, cis = cis))
+  return(sds)
 }
