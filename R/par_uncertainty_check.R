@@ -90,11 +90,15 @@
 
 
 
-par_uncertainty_check= function(vario.mod.output, mod.nr,
+par_uncertainty_check = function(vario.mod.output, mod.nr,
                            par.est = NULL, data= NULL, max.dist=NULL,nbins=NULL,
-                           B = 1000, threshold.factor = 1.2){
-  EgoCor::par.uncertainty(vario.mod.output, mod.nr, par.est, data, max.dist,nbins,
-                          B, threshold.factor)
+                           B = 1000, threshold.factor = c(1.1, 1.5, 2.0, 2.5, 3.0)){
+  sds = list()
+  for (i in 1:length(threshold.factor)){
+    sds[[i]] = EgoCor::par.uncertainty(vario.mod.output, mod.nr, par.est, data, max.dist,nbins,
+                                       B, threshold.factor[i])
+  }
+  return(sds)
 }
 
 
