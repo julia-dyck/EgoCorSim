@@ -9,7 +9,8 @@ par_uncertainty_q(
   max.dist,
   nbins = 10,
   B = 1000,
-  qu = seq(from = 0.75, to = 1, by = 0.05)
+  qu = seq(from = 0.75, to = 1, by = 0.05),
+  fit.method = 7
 )
 }
 \arguments{

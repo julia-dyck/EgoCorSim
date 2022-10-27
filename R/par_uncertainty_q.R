@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(from = 0.75, to = 1, by = 0.05)){
+par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(from = 0.75, to = 1, by = 0.05), fit.method = 7){
 
   # INPUT VARIABLES
   # sample.geo = a data set of class geo.data
@@ -70,7 +70,7 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
 
   par.est = t(sapply(rep(0, B_tilde), FUN = one_resample_analysis, y.iid=y.iid,
                      L=L, nscore.obj = nscore.obj, coords = coords, max.dist = max.dist,
-                     nbins = nbins))
+                     nbins = nbins, fit.method = fit.method))
 
   par.est = stats::na.omit(par.est)
   nr_reestimates = length(stats::na.omit(par.est[,1]))
@@ -78,7 +78,7 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
   while(nr_reestimates < B_tilde){
     next.est = one_resample_analysis(platzhalter = NULL, y.iid=y.iid,
                                      L=L, nscore.obj = nscore.obj, coords = coords, max.dist = max.dist,
-                                     nbins = nbins)
+                                     nbins = nbins, fit.method = fit.method)
     if(!is.na(next.est[1])){
       par.est = rbind(par.est, next.est)
       nr_reestimates= nr_reestimates + 1
