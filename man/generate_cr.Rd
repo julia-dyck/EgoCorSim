@@ -4,7 +4,16 @@
 \alias{generate_cr}
 \title{Generate a complete realization}
 \usage{
-generate_cr()
+generate_cr(true.nugget = 60, true.sigma_sq = 40, true.phi = 200, nmax = 100)
+}
+\arguments{
+\item{true.nugget}{True nugget parameter}
+
+\item{true.sigma_sq}{True partial sill parameter}
+
+\item{true.phi}{True range parameter}
+
+\item{nmax}{}
 }
 \description{
 Generate a complete realization

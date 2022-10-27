@@ -1,20 +1,33 @@
 #' Generate a complete realization
 #'
+#' @param true.nugget True nugget parameter
+#' @param true.sigma_sq True partial sill parameter
+#' @param true.phi True range parameter
+#' @param nmax
+#'
 #' @return
 #' @export
 #'
 #' @examples
-generate_cr = function(){
-  true.nugget = 60
-  true.sigma_sq = 40
-  true.phi = 200
+generate_cr = function(true.nugget = 60, true.sigma_sq = 40, true.phi = 200, nmax = 100){
   D_range = 10000
-  true_covariogram = RMexp(var = true.sigma_sq,
-                           scale = true.phi)+RMnugget(var = true.nugget) # true model
-  unifx = runif(250000, min = 0, max = D_range) # gen x coords
-  unify = runif(250000, min = 0, max = D_range) # gen y coords
-  # -> simulate the whole population of the neighbourhood (ein Stadtteil)
-  spatial.data = RFsimulate(model = true_covariogram, x = unifx, y = unify, n = 1) # gen. n=1 realizaton
-  complete.realiz = cbind(spatial.data@coords,spatial.data@data)
-  return(complete.realiz)
+
+  # creating random grid
+  x = runif(250000, min = 0, max = D_range)
+  y = runif(250000, min = 0, max = D_range)
+  xy = as.data.frame(cbind(x,y))
+  colnames(xy) <- c('x','y')
+  sp::coordinates(xy) = ~x+y
+
+  model = gstat::vgm(nugget = true.nugget, psill = true.sigma_sq, range = true.phi, model = "Exp")
+
+  true.model = gstat::gstat(formula = z~1,
+                         locations =~x+y,
+                         dummy = T,         # passt wohl so (= F liefert auch einen error)
+                         beta = 0,          # mean des stationary random field = 0 (constant)
+                         model = model,
+                         nmax = nmax)
+
+  cr = predict(true.model, newdata = xy, nsim = 1)
+  return(cr = as.data.frame(cr))
 }
