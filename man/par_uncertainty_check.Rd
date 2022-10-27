@@ -12,7 +12,8 @@ par_uncertainty_check(
   max.dist = NULL,
   nbins = NULL,
   B = 1000,
-  threshold.factor = 1.2
+  threshold.factor = c(1.1, 1.5, 2, 2.5, 3),
+  fit.method = NULL
 )
 }
 \arguments{
