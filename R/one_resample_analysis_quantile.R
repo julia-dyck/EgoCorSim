@@ -1,4 +1,4 @@
-one_resample_analysis = function(platzhalter, y.iid, L, nscore.obj, coords, max.dist, nbins){
+one_resample_analysis = function(platzhalter, y.iid, L, nscore.obj, coords, max.dist, nbins, fit.method){
   # (6) resampling from y.iid
   resmpl = sample(y.iid, size = length(y.iid), replace = T)
 
@@ -12,7 +12,7 @@ one_resample_analysis = function(platzhalter, y.iid, L, nscore.obj, coords, max.
   #                             repeating this function application
 
   # (10) semivariogram model estimation, wls
-  wls.est = EgoCor:::sv.sep(resmpl, coords = coords, max.dist = max.dist, nbins = nbins)
+  wls.est = EgoCor:::sv.sep(resmpl, coords = coords, max.dist = max.dist, nbins = nbins, fit.method = fit.method)
 
   if (sum(wls.est < 0) == 0){
     return(wls.est)
