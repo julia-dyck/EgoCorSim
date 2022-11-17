@@ -2,11 +2,11 @@
 #'
 #' @param BRISC_Out An Object created by BRISC_estimation
 #' @param B Number of bootstrap samples
-#' @param h
-#' @param n_omp
-#' @param init
-#' @param verbose
-#' @param nugget_status
+#' @param h h
+#' @param n_omp omp
+#' @param init init
+#' @param verbose verbose
+#' @param nugget_status nugget_status
 #'
 #' @return
 #' @export
@@ -29,7 +29,7 @@ par_uncertainty_brisc = function(sample, B = 1000, h = 1, n_omp = 1,
       boot.pars = boot$boot.Theta
       boot.pars = cbind(boot.pars[,2], boot.pars[,1], 1/boot.pars[,3])
 
-      sds = apply(boot.pars, 2, sd)
+      sds = apply(boot.pars, 2, stats::sd)
     },
     error = function(e){
       message('** ERR at ', Sys.time(), " **")

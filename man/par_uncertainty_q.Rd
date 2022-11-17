@@ -18,9 +18,13 @@ par_uncertainty_q(
 
 \item{max.dist}{Maximum distance included in the estimation}
 
+\item{nbins}{Number of bins for empirical semivariogram}
+
 \item{B}{Number of bootstrap samples}
 
 \item{qu}{Sequence of quantiles}
+
+\item{fit.method}{Gstat fit method that is used}
 }
 \description{
 Semi-variogram parameter uncertainty - Quantile method

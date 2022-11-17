@@ -17,7 +17,15 @@ par_uncertainty_brisc(
 \arguments{
 \item{B}{Number of bootstrap samples}
 
-\item{nugget_status}{}
+\item{h}{h}
+
+\item{n_omp}{omp}
+
+\item{init}{init}
+
+\item{verbose}{verbose}
+
+\item{nugget_status}{nugget_status}
 
 \item{BRISC_Out}{An Object created by BRISC_estimation}
 }

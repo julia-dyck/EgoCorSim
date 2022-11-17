@@ -13,7 +13,7 @@ generate_cr(true.nugget = 60, true.sigma_sq = 40, true.phi = 200, nmax = 100)
 
 \item{true.phi}{True range parameter}
 
-\item{nmax}{}
+\item{nmax}{Maximum number of pairwise correlations?}
 }
 \description{
 Generate a complete realization

@@ -25,6 +25,7 @@
 #'          of each parameter.
 #' @param threshold.factor The threshold factor specifies the filter within the filtered
 #'                         bootstrap method (see details). If not specified, a default value of 1.2 is used.
+#' @param fit.method Gstat fit method that is used
 #'
 #' @details \strong{Two alternative approaches for the input of the arguments:}
 #'
@@ -93,10 +94,10 @@
 par_uncertainty_check = function(vario.mod.output, mod.nr,
                            par.est = NULL, data= NULL, max.dist=NULL,nbins=NULL,
                            B = 1000, threshold.factor = c(1.1, 1.5, 2.0, 2.5, 3.0),
-                           fit.method = 7, mc.cores = 1){
+                           fit.method = 7){
 
   unc = EgoCor::par.uncertainty2(vario.mod.output, mod.nr, par.est, data, max.dist, nbins,
-                                 B, threshold.factor, fit.method, mc.cores = mc.cores)
+                                 B, threshold.factor, mc.cores = 1)
   est = unc$unc.table[1:3,1]
   names(est) = c("nugget", "partial.sill", "shape")
   sds = unc$se

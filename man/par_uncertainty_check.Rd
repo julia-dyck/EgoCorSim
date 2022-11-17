@@ -13,8 +13,7 @@ par_uncertainty_check(
   nbins = NULL,
   B = 1000,
   threshold.factor = c(1.1, 1.5, 2, 2.5, 3),
-  fit.method = 7,
-  mc.cores = 1
+  fit.method = 7
 )
 }
 \arguments{
@@ -47,6 +46,8 @@ of each parameter.}
 
 \item{threshold.factor}{The threshold factor specifies the filter within the filtered
 bootstrap method (see details). If not specified, a default value of 1.2 is used.}
+
+\item{fit.method}{Gstat fit method that is used}
 }
 \value{
 The function returns parameter estimates and corresponding standard error estimates

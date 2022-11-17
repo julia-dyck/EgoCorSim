@@ -13,6 +13,9 @@ spatial_sampling(cr, N, nr_divisions)
 
 \item{nr_divisions}{Number of subdivisions: Choose between 1, 4, 9}
 }
+\value{
+Returns a sample of length N
+}
 \description{
 Function for spatial sampling from complete realization
 }

@@ -3,7 +3,7 @@
 #' @param true.nugget True nugget parameter
 #' @param true.sigma_sq True partial sill parameter
 #' @param true.phi True range parameter
-#' @param nmax
+#' @param nmax Maximum number of pairwise correlations?
 #'
 #' @return
 #' @export
@@ -13,8 +13,8 @@ generate_cr = function(true.nugget = 60, true.sigma_sq = 40, true.phi = 200, nma
   D_range = 10000
 
   # creating random grid
-  x = runif(250000, min = 0, max = D_range)
-  y = runif(250000, min = 0, max = D_range)
+  x = stats::runif(250000, min = 0, max = D_range)
+  y = stats::runif(250000, min = 0, max = D_range)
   xy = as.data.frame(cbind(x,y))
   colnames(xy) <- c('x','y')
   sp::coordinates(xy) = ~x+y
@@ -28,6 +28,6 @@ generate_cr = function(true.nugget = 60, true.sigma_sq = 40, true.phi = 200, nma
                          model = model,
                          nmax = nmax)
 
-  cr = predict(true.model, newdata = xy, nsim = 1)
+  cr = stats::predict(true.model, newdata = xy, nsim = 1)
   return(cr = as.data.frame(cr))
 }

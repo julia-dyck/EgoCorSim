@@ -28,7 +28,7 @@ one_resample_analysis_q = function(platzhalter, y.iid, L, nscore.obj, coords, ma
     wls.est = EgoCor:::sv.sep2(resmpl, coords = coords, max.dist = max.dist, nbins = nbins, fit.method = fit.method)
   }
 
-  if (sum(wls.est < 0) == 0){ # soll das so bleiben?
+  if (sum(wls.est < 0) == 0){
     return(wls.est)
   }
   else {

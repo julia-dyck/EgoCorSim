@@ -2,8 +2,10 @@
 #'
 #' @param sample.geo A spatial sample
 #' @param max.dist Maximum distance included in the estimation
+#' @param nbins Number of bins for empirical semivariogram
 #' @param B Number of bootstrap samples
 #' @param qu Sequence of quantiles
+#' @param fit.method Gstat fit method that is used
 #'
 #' @return
 #' @export
@@ -100,17 +102,17 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
   # 3. col = phi estimates
 
   # threshold: qu.min quantile
-  sds=c(sd((par.est[,1][order(par.est[,1])])[1:B]),
-        sd((par.est[,2][order(par.est[,2])])[1:B]),
-        sd((par.est[,3][order(par.est[,3])])[1:B]))
+  sds=c(stats::sd((par.est[,1][order(par.est[,1])])[1:B]),
+        stats::sd((par.est[,2][order(par.est[,2])])[1:B]),
+        stats::sd((par.est[,3][order(par.est[,3])])[1:B]))
 
   # thresholds: qu[2]-qu[max] (in increasing order)
   for(q in 2:length(qu)){
     ind = sample(1:ceiling(B/qu[1]), size = ceiling(B/qu[q]), replace=FALSE)
     par.est.subsample = par.est[ind,]
-    sds = c(sds, c(sd((par.est.subsample[,1][order(par.est.subsample[,1])])[1:B]),
-                   sd((par.est.subsample[,2][order(par.est.subsample[,2])])[1:B]),
-                   sd((par.est.subsample[,3][order(par.est.subsample[,3])])[1:B])))
+    sds = c(sds, c(stats::sd((par.est.subsample[,1][order(par.est.subsample[,1])])[1:B]),
+                   stats::sd((par.est.subsample[,2][order(par.est.subsample[,2])])[1:B]),
+                   stats::sd((par.est.subsample[,3][order(par.est.subsample[,3])])[1:B])))
   }
   # # 95%-percentile bootstrap Confidence Intervals (pbCI) based on B resamples
   # ind = sample(1:ceiling(B/qu.min), size = B, replace=FALSE)

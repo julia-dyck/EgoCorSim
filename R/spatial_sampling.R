@@ -4,7 +4,7 @@
 #' @param N Number of samples
 #' @param nr_divisions Number of subdivisions: Choose between 1, 4, 9
 #'
-#' @return
+#' @return Returns a sample of length N
 #' @export
 #'
 #' @examples
