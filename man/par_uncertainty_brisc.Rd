@@ -5,7 +5,7 @@
 \title{Semi-variogram parameter uncertainty - BRISC}
 \usage{
 par_uncertainty_brisc(
-  BRISC_Out,
+  sample,
   B = 1000,
   h = 1,
   n_omp = 1,
@@ -15,11 +15,11 @@ par_uncertainty_brisc(
 )
 }
 \arguments{
-\item{BRISC_Out}{An Object created by BRISC_estimation}
-
 \item{B}{Number of bootstrap samples}
 
 \item{nugget_status}{}
+
+\item{BRISC_Out}{An Object created by BRISC_estimation}
 }
 \description{
 Semi-variogram parameter uncertainty - BRISC

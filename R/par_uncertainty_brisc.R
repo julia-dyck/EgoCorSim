@@ -12,9 +12,15 @@
 #' @export
 #'
 #' @examples
-par_uncertainty_brisc = function(BRISC_Out, B = 1000, h = 1, n_omp = 1,
+par_uncertainty_brisc = function(sample, B = 1000, h = 1, n_omp = 1,
                                  init = "Initial", verbose = TRUE,
                                  nugget_status = 1){
+  coords = as.matrix(cbind(x = sample[,1], y = sample[,2]))
+
+  BRISC_Out = BRISC::BRISC_estimation(coords = coords, y = sample[,3]) # was ist mit max.dist und nbins?
+  est = BRISC_Out$Theta
+  names(est) = c("nugget.brisc", "partial.sill.brisc", "shape.brisc")
+
   sds = tryCatch(
     expr = {
       boot = BRISC::BRISC_bootstrap(BRISC_Out = BRISC_Out, n_boot = B, h = h, n_omp = n_omp,
@@ -30,6 +36,6 @@ par_uncertainty_brisc = function(BRISC_Out, B = 1000, h = 1, n_omp = 1,
       sds = rep(NA, 3)
     }
   )
-  names(sds) = c("n.sd.mle","s.sd.mle","p.sd.mle")
-  return(list(sds = sds))
+  names(sds) = c("n.sd.brisc","ps.sd.brisc","s.sd.brisc")
+  return(c(est, sds))
 }

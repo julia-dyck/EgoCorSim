@@ -92,16 +92,16 @@
 
 par_uncertainty_check = function(vario.mod.output, mod.nr,
                            par.est = NULL, data= NULL, max.dist=NULL,nbins=NULL,
-                           B = 1000, threshold.factor = c(1.1, 1.5, 2.0, 2.5, 3.0), fit.method = NULL){
-  sds = numeric(0)
-  for (i in 1:length(threshold.factor)){
-    unc = EgoCor::par.uncertainty(vario.mod.output, mod.nr, par.est, data, max.dist, nbins,
-                                       B, threshold.factor[i], fit.method)
-    se = unc$se
-    names(se) = c(paste0("se(nugget).", i), paste0("se(partial.sill).", i), paste0("se(shape).", i))
-    sds = c(sds, se)
-  }
-  return(sds)
+                           B = 1000, threshold.factor = c(1.1, 1.5, 2.0, 2.5, 3.0),
+                           fit.method = 7, mc.cores = 1){
+
+  unc = EgoCor::par.uncertainty2(vario.mod.output, mod.nr, par.est, data, max.dist, nbins,
+                                 B, threshold.factor, fit.method, mc.cores = mc.cores)
+  est = unc$unc.table[1:3,1]
+  names(est) = c("nugget", "partial.sill", "shape")
+  sds = unc$se
+  names(sds) = paste0(rep(c("n.sd.check.", "ps.sd.check.", "s.sd.check."), length(threshold.factor)), as.vector(sapply(threshold.factor, rep, times = 3)))
+  return(c(est, sds))
 }
 
 

@@ -36,13 +36,23 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
   ini.partial.sill <- stats::var(y.geo[[1]])
   ini.shape <- max(emp.sv$dist)/3
 
+  if (fit.method == 8){
+  theta.star0 = log(c(.1, ini.partial.sill, ini.shape))
+  sv.mod = stats::nlm(f = EgoCor:::loss, p = theta.star0, h = emp.sv$dist, gamma_hat = emp.sv$gamma,
+               n_h = emp.sv$np)
+  mod.pars = exp(sv.mod$estimate)
+  }
+  if (fit.method != 8){
   v = gstat::vgm(psill = ini.partial.sill, model = "Exp", range = ini.shape, nugget = 0)
   sv.mod = gstat::fit.variogram(emp.sv, model = v,  # fitting the model with starting model
                                 fit.sills = TRUE,
                                 fit.ranges = TRUE,
+                                fit.method = fit.method,
                                 debug.level = 1, warn.if.neg = FALSE, fit.kappa = FALSE)
 
   mod.pars = c(sv.mod$psill[1], sv.mod$psill[2], sv.mod$range[2])
+  }
+
   # (3)
   Dist_mat = SpatialTools::dist1(coords) # NxN distance matrix
 
@@ -68,7 +78,7 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
 
   B_tilde = ceiling(B/qu[1])
 
-  par.est = t(sapply(rep(0, B_tilde), FUN = one_resample_analysis, y.iid=y.iid,
+  par.est = t(sapply(rep(0, B_tilde), FUN = one_resample_analysis_q, y.iid=y.iid,
                      L=L, nscore.obj = nscore.obj, coords = coords, max.dist = max.dist,
                      nbins = nbins, fit.method = fit.method))
 
@@ -76,7 +86,7 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
   nr_reestimates = length(stats::na.omit(par.est[,1]))
 
   while(nr_reestimates < B_tilde){
-    next.est = one_resample_analysis(platzhalter = NULL, y.iid=y.iid,
+    next.est = one_resample_analysis_q(platzhalter = NULL, y.iid=y.iid,
                                      L=L, nscore.obj = nscore.obj, coords = coords, max.dist = max.dist,
                                      nbins = nbins, fit.method = fit.method)
     if(!is.na(next.est[1])){
@@ -109,8 +119,12 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
   #          quantile(par.est.subsample[,2], probs = c(0.025, 0.975)),
   #          quantile(par.est.subsample[,3], probs = c(0.025, 0.975)))
 
-  names(sds) = paste0(rep(c("n.sd","s.sd","p.sd"),length(qu)), as.vector(sapply(qu*100,rep, times=3)))
+  names(sds) = paste0(rep(c("n.sd.q","ps.sd.q","s.sd.q"),length(qu)), as.vector(sapply(qu*100,rep, times=3)))
+
+  est = mod.pars
+  names(est) = c("nugget", "partial.sill", "shape")
 
   #return(list(mod.pars=mod.pars, sds = sds, resample.ests = par.est, pbCI=pbCI))
-  return(sds)
+  return(c(est, sds))
 }
+
