@@ -72,12 +72,12 @@ one_scenario2 = function(input, cr, nbins, B = 1000,
   result = as.data.frame(result)
   colnames(result) = names
 
-  # save(result,
-  #      file = paste0(
-  #        "bootstap_result_",
-  #        N, "_",
-  #        nr_divisions, "_",
-  #        round(max.dist,0), "_",
-  #        ".RData"
-  #      ))
+  save(result,
+       file = paste0(
+         "bootstap_result_",
+         N, "_",
+         nr_divisions, "_",
+         round(max.dist,0), "_",
+         ".RData"
+       ))
 }
