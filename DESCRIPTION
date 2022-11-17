@@ -6,7 +6,7 @@ Authors@R: c(
     person("Odile", "Sauzet", role = "aut"),
     person("Jan-Ole", "Koslik", role = "aut")
   )
-Description: What the package does (one paragraph).
+Description: Functions for simulation study.
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
