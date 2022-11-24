@@ -27,7 +27,6 @@ one_scenario = function(input, cr, nbins, B = 1000,
 
   result = matrix(data = NA, nrow = n_sim, ncol = (3 + 6*thr_length) + (3 + 6*qu_length) + 6)
 
-  t1 = Sys.time()
   for (i in 1:n_sim){
     sample = spatial_sampling(cr, N, nr_divisions)
     # check:
@@ -44,6 +43,7 @@ one_scenario = function(input, cr, nbins, B = 1000,
     result[i,] = c(unc_check, unc_q, unc_brisc)
     set.seed(Sys.time())
   }
+
 
   # creating column names
   names_est_check = paste0(c("nugget", "partial_sill", "shape"), "_check")
