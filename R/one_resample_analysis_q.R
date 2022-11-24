@@ -19,7 +19,7 @@ one_resample_analysis_q = function(platzhalter, y.iid, L, nscore.obj, coords, ma
   if (fit.method == 8){
     wls.est = tryCatch(EgoCor:::sv.sep2_nlm(resmpl, coords = coords, max.dist = max.dist, nbins = nbins),
                        warning = function(w) w)
-    if(is(wls.est, "warning")){
+    if(methods::is(wls.est, "warning")){
       w = 1
       wls.est = EgoCor:::sv.sep2(resmpl, coords = coords, max.dist = max.dist, nbins = nbins, fit.method = fit.method)
     }
