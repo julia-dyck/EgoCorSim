@@ -17,7 +17,8 @@ Imports:
     SpatialTools,
     stats,
     BRISC, 
-    EgoCor
+    EgoCor, 
+    methods
 Suggests:
     knitr,
     rmarkdown,
