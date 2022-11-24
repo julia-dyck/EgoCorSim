@@ -101,8 +101,15 @@ par_uncertainty_check = function(vario.mod.output, mod.nr,
   est = unc$unc.table[1:3,1]
   names(est) = c("nugget", "partial.sill", "shape")
   sds = unc$se
-  names(sds) = paste0(rep(c("n.sd.check.", "ps.sd.check.", "s.sd.check."), length(threshold.factor)), as.vector(sapply(threshold.factor, rep, times = 3)))
-  return(c(est, sds))
+  nr_reest = unc$nr_reest
+
+  result = numeric(0)
+  for (i in 1:length(threshold.factor)){
+    result_i = c(sds[(i-1)*3 + 1:3], nr_reest[1,1], nr_reest[i,2], nr_reest[i,3])
+    names(result_i) = paste0(c("n.sd.check.", "ps.sd.check.", "s.sd.check.", "nr_reest_gstat", "nr_reest_thr", "nr_overlap"), threshold.factor)
+    result = c(result, result_i)
+  }
+  return(c(est, result))
 }
 
 

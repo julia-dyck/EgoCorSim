@@ -70,7 +70,7 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
   # (4) Cholesky decomposition -> fertige Fkt. existieren
 
   # Adding diag(epsilon) on the diagonal to force it to be positve definite (numerical reasons)
-  Cov_mat = Cov_mat + diag(rep(1e-8, nrow(sample.geo)))
+  Cov_mat = Cov_mat + diag(rep(1e-15, nrow(sample.geo)))
 
   L = t(chol(Cov_mat))
   # (5) transform y in an iid sample
@@ -78,50 +78,52 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
 
   # (6),(7),(8) and (10)
 
-  B_tilde = ceiling(B/qu[1])
+  qu = sort(qu, decreasing = T)
+  B_tilde = ceiling(B/qu)
+  B_tilde.fd = diff(B_tilde)
+  B_tilde = c(B_tilde[1], B_tilde.fd)
+  nr_reest_gstat = numeric(length(qu))
+  nr_reest_neg = numeric(length(qu))
+  nr_overlap = numeric(length(qu))
+  sd_nugget = numeric(length(qu))
+  sd_partial.sill = numeric(length(qu))
+  sd_range = numeric(length(qu))
+  par.est = matrix(data = NA, nrow = 0, ncol = 5)
 
-  par.est = t(sapply(rep(0, B_tilde), FUN = one_resample_analysis_q, y.iid=y.iid,
-                     L=L, nscore.obj = nscore.obj, coords = coords, max.dist = max.dist,
-                     nbins = nbins, fit.method = fit.method))
+  for (i in 1:length(B_tilde)){
+    par.est.step = t(sapply(rep(0, B_tilde[i]), FUN = one_resample_analysis_q, y.iid=y.iid,
+                       L=L, nscore.obj = nscore.obj, coords = coords, max.dist = max.dist,
+                       nbins = nbins, fit.method = fit.method))
+    nr_notnull = sum(apply(as.matrix(par.est.step[,4:5]), 1, sum) == 0)
 
-  par.est = stats::na.omit(par.est)
-  nr_reestimates = length(stats::na.omit(par.est[,1]))
-
-  while(nr_reestimates < B_tilde){
-    next.est = one_resample_analysis_q(platzhalter = NULL, y.iid=y.iid,
-                                     L=L, nscore.obj = nscore.obj, coords = coords, max.dist = max.dist,
-                                     nbins = nbins, fit.method = fit.method)
-    if(!is.na(next.est[1])){
-      par.est = rbind(par.est, next.est)
-      nr_reestimates= nr_reestimates + 1
+    while(nr_notnull < B_tilde[i]){
+      par.reest = t(sapply(rep(0, B_tilde[i] - nr_notnull), FUN = one_resample_analysis_q, y.iid=y.iid,
+                           L=L, nscore.obj = nscore.obj, coords = coords, max.dist = max.dist,
+                           nbins = nbins, fit.method = fit.method))
+      par.est.step = rbind(par.est.step, par.reest)
+      nr_notnull = sum(apply(as.matrix(par.est.step[,4:5]), 1, sum) == 0)
     }
+
+    par.est = rbind(par.est, par.est.step)
+    nr_reest_gstat[i] = sum(par.est[,4] == 1)
+    nr_reest_neg[i] = sum(par.est[,5] == 1)
+    nr_overlap[i] = sum(par.est[,4] == 1 & par.est[,5] == 1)
+
+    # get sds
+    par.est.fine = par.est[which(par.est[,4] == 0 & par.est[,5] == 0),]
+
+    sd_nugget[i] = stats::sd(par.est.fine[,1][order(par.est.fine[,1])][1:B])
+    sd_partial.sill[i] = stats::sd(par.est.fine[,2][order(par.est.fine[,2])][1:B])
+    sd_range[i] = stats::sd(par.est.fine[,3][order(par.est.fine[,3])][1:B])
   }
 
-  # 1. col = nugget estimates
-  # 2. col = partial.sill estimates
-  # 3. col = phi estimates
+  sds = numeric(0)
 
-  # threshold: qu.min quantile
-  sds=c(stats::sd((par.est[,1][order(par.est[,1])])[1:B]),
-        stats::sd((par.est[,2][order(par.est[,2])])[1:B]),
-        stats::sd((par.est[,3][order(par.est[,3])])[1:B]))
-
-  # thresholds: qu[2]-qu[max] (in increasing order)
-  for(q in 2:length(qu)){
-    ind = sample(1:ceiling(B/qu[1]), size = ceiling(B/qu[q]), replace=FALSE)
-    par.est.subsample = par.est[ind,]
-    sds = c(sds, c(stats::sd((par.est.subsample[,1][order(par.est.subsample[,1])])[1:B]),
-                   stats::sd((par.est.subsample[,2][order(par.est.subsample[,2])])[1:B]),
-                   stats::sd((par.est.subsample[,3][order(par.est.subsample[,3])])[1:B])))
+  for (i in 1:length(qu)){
+    result = c(sd_nugget[i], sd_partial.sill[i], sd_range[i], nr_reest_gstat[i], nr_reest_neg[i], nr_overlap[i])
+    names(result) = paste0(c("n.sd.q","ps.sd.q","s.sd.q", "nr_reest_gstat", "nr_reest_neg", "nr_overlap"), "_", qu[i])
+    sds = c(sds, result)
   }
-  # # 95%-percentile bootstrap Confidence Intervals (pbCI) based on B resamples
-  # ind = sample(1:ceiling(B/qu.min), size = B, replace=FALSE)
-  # par.est.subsample = par.est[ind,]
-  # pbCI = c(quantile(par.est.subsample[,1], probs = c(0.025, 0.975)),
-  #          quantile(par.est.subsample[,2], probs = c(0.025, 0.975)),
-  #          quantile(par.est.subsample[,3], probs = c(0.025, 0.975)))
-
-  names(sds) = paste0(rep(c("n.sd.q","ps.sd.q","s.sd.q"),length(qu)), as.vector(sapply(qu*100,rep, times=3)))
 
   est = mod.pars
   names(est) = c("nugget", "partial.sill", "shape")
