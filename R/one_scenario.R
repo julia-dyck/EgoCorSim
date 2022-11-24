@@ -25,7 +25,7 @@ one_scenario = function(input, cr, nbins, B = 1000,
   thr_length = length(threshold.factor)
   qu_length = length(qu)
 
-  result = matrix(data = NA, nrow = n_sim, ncol = (3 + 3*thr_length) + (3 + 3*qu_length) + 6)
+  result = matrix(data = NA, nrow = n_sim, ncol = (3 + 6*thr_length) + (3 + 6*qu_length) + 6)
 
   t1 = Sys.time()
   for (i in 1:n_sim){
@@ -40,6 +40,7 @@ one_scenario = function(input, cr, nbins, B = 1000,
                                 qu = qu, fit.method = fit.method)
     # BRISC:
     unc_brisc = par_uncertainty_brisc(sample = sample, B = B)
+    # Anzahl verworfenen dazwischen
     result[i,] = c(unc_check, unc_q, unc_brisc)
     set.seed(Sys.time())
   }
@@ -47,8 +48,8 @@ one_scenario = function(input, cr, nbins, B = 1000,
   # creating column names
   names_est_check = paste0(c("nugget", "partial_sill", "shape"), "_check")
   names_est_q = paste0(c("nugget", "partial_sill", "shape"), "_q")
-  names_sd_check = paste0(c("n.sd", "ps.sd", "s.sd"), "_check_", as.vector(sapply(threshold.factor, rep, times = 3)))
-  names_sd_q = paste0(c("n.sd", "ps.sd", "s.sd"), "_q_", as.vector(sapply(qu, rep, times = 3)))
+  names_sd_check = paste0(c("n.sd", "ps.sd", "s.sd", "nr_reest_gstat", "nr_reest_thr", "nr_overlap"), "_check_", as.vector(sapply(threshold.factor, rep, times = 6)))
+  names_sd_q = paste0(c("n.sd.q","ps.sd.q","s.sd.q", "nr_reest_gstat", "nr_reest_neg", "nr_overlap"), "_q_", as.vector(sapply(qu, rep, times = 6)))
   names_brisc = paste0(c("nugget", "partial_sill", "shape", "n.sd", "ps.sd", "s.sd"), "_brisc")
 
   result = as.data.frame(result)
