@@ -40,7 +40,7 @@ one_scenario = function(input, cr, nbins, B = 1000,
     # BRISC:
     unc_brisc = par_uncertainty_brisc(sample = sample, B = B)
     # Anzahl verworfenen dazwischen
-    result[i,] = c(unc_check, unc_q, unc_brisc)
+    result[i,] = c(unc_check, unc_check[1:3], unc_q, unc_brisc)
     set.seed(Sys.time())
   }
 

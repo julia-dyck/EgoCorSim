@@ -125,10 +125,7 @@ par_uncertainty_q = function(sample.geo, max.dist, nbins = 10, B=1000, qu = seq(
     sds = c(sds, result)
   }
 
-  est = mod.pars
-  names(est) = c("nugget", "partial.sill", "shape")
-
   #return(list(mod.pars=mod.pars, sds = sds, resample.ests = par.est, pbCI=pbCI))
-  return(c(est, sds))
+  return(sds)
 }
 
