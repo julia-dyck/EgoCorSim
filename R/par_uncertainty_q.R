@@ -3,7 +3,7 @@
 #' @param sample.geo A spatial sample
 #' @param max.dist Maximum distance included in the estimation
 #' @param nbins Number of bins for empirical semivariogram
-#' @param B Number of bootstrap samples
+#' @param B Number of bootstrap samples (please don't choose smaller than 30)
 #' @param qu Sequence of quantiles
 #' @param fit.method Gstat fit method that is used
 #'
