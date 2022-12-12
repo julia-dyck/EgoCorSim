@@ -20,7 +20,7 @@ par_uncertainty_q(
 
 \item{nbins}{Number of bins for empirical semivariogram}
 
-\item{B}{Number of bootstrap samples}
+\item{B}{Number of bootstrap samples (please don't choose smaller than 30)}
 
 \item{qu}{Sequence of quantiles}
 
