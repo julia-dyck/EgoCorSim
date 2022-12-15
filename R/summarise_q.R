@@ -1,4 +1,4 @@
-#' Compute summary statistics for the simulation of the check based method
+#' Compute summary statistics for the simulation of the quantile based method
 #'
 #' @param wd working directory were ALL the simulation files lie
 #' @param N Number of observations (500, 1000, 2000)
@@ -22,7 +22,7 @@ summarise_q = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
   # Loading the datasets ----------------------------------------------------
 
   # if N is specified
-  if(!is.null(N) & is.null(density) & is.null(max.dist & is.null(qu))){
+  if(!is.null(N) & is.null(density) & is.null(max.dist) & is.null(qu)){
 
     load(file = paste0("boot_result_", N, "_1_457_", 1,".RData"))
     d1 = result

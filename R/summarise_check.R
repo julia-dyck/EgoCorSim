@@ -22,7 +22,7 @@ setwd(wd)
 # Loading the datasets ----------------------------------------------------
 
 # if N is specified
-if(!is.null(N) & is.null(density) & is.null(max.dist & is.null(thr))){
+if(!is.null(N) & is.null(density) & is.null(max.dist) & is.null(thr)){
 
   load(file = paste0("boot_result_", N, "_1_457_", 1,".RData"))
   d1 = result
