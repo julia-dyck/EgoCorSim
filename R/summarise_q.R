@@ -310,7 +310,6 @@ summarise_q = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
   # if no threshold is supplied we need to glue all columns together
 
   if(is.null(qu)){
-    thr = c(1.1, 1.2, 1.5, 2, 2.5, 3)
     if(param == 1){ # nugget
       mc = sd(data_f$nugget_q)
       emp_se = mean(
