@@ -414,11 +414,10 @@ if(!is.null(thr)){
 
 
 out = c(mc, mc_se, emp_se, se_emp_se, bias, MSE)
+names(out) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE")
 
 ns = c(n_sim, n_sim_tilde)
 names(ns) = c("n_sim", "n_sim_tilde")
-
-names(out) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE")
 
 return(list(n = ns, result = out))
 }
