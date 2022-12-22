@@ -15,7 +15,7 @@ make_table = function(wd, param, method = "check", n_runs){
   max.dist = c(457, 624, 832)
   threshold = c(1.1, 1.2, 1.5, 2, 2.5, 3)
   qu = c(1, 0.95, 0.9, 0.85, 0.8, 0.75)
-  parameter = c("nugget", "partial_sill", "shape")
+  parameter = c("nugget", "partial sill", "shape")
 
   if(method == "check"){
     N_table = matrix(data = NA, 3, 8)
