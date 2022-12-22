@@ -5,7 +5,7 @@
 #' @param method one of c("check", "quantile", "brisc")
 #' @param n_runs Number of seperate files for each scenario (this needs to fit to the largest integer at the end of the file names)
 #'
-#' @return A list containing the tables
+#' @return A LaTeX-ready version of the table is printed. The full table is also returned invisibly.
 #' @export
 #'
 #' @examples

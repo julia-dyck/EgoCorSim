@@ -16,7 +16,7 @@ make_table(wd, param, method = "check", n_runs)
 \item{n_runs}{Number of seperate files for each scenario (this needs to fit to the largest integer at the end of the file names)}
 }
 \value{
-A list containing the tables
+A LaTeX-ready version of the table is printed. The full table is also returned invisibly.
 }
 \description{
 Creating result table for simulation study fast
