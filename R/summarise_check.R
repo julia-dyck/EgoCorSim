@@ -310,7 +310,6 @@ n_sim_tilde = nrow(data_f)
 # if no threshold is supplied we need to glue all columns together
 
 if(is.null(thr)){
-  thr = c(1.1, 1.2, 1.5, 2, 2.5, 3)
   if(param == 1){ # nugget
     mc = sd(data_f$nugget_check)
     emp_se = mean(
