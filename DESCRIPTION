@@ -1,6 +1,6 @@
 Package: EgoCorSim
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Functions for simulation study.
+Version: 0.0.1
 Authors@R: c(
     person("Julia", "Dyck", , "j.dyck@uni-bielefeld.de", role = c("aut", "cre")),
     person("Odile", "Sauzet", role = "aut"),
