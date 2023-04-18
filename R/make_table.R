@@ -88,7 +88,7 @@ make_table = function(wd, param, method = "check", n_runs){
           include.colnames = T,
           caption.placement = "bottom", #"top","bottom", NULL
           caption.width = "\\textwidth",
-          hline.after=c(-1,nrow(t)), #We don't need hline; we use booktabs -> NULL,
+          hline.after=c(-1,nrow(table)),
           floating=TRUE, # whether \begin{Table} should be created (TRUE) or not (FALSE)
           sanitize.text.function = force, # Important to treat content of first column as latex function
           table.placement="H"
@@ -167,7 +167,7 @@ make_table = function(wd, param, method = "check", n_runs){
           include.colnames = T,
           caption.placement = "bottom", #"top","bottom", NULL
           caption.width = "\\textwidth",
-          hline.after=c(-1,nrow(t)), #We don't need hline; we use booktabs -> NULL,
+          hline.after=c(-1,nrow(table)),
           floating=TRUE, # whether \begin{Table} should be created (TRUE) or not (FALSE)
           sanitize.text.function = force, # Important to treat content of first column as latex function
           table.placement="H"
@@ -238,7 +238,7 @@ make_table = function(wd, param, method = "check", n_runs){
           include.colnames = T,
           caption.placement = "bottom", #"top","bottom", NULL
           caption.width = "\\textwidth",
-          hline.after=c(-1,nrow(t)), #We don't need hline; we use booktabs -> NULL,
+          hline.after=c(-1,nrow(table)),
           floating=TRUE, # whether \begin{Table} should be created (TRUE) or not (FALSE)
           sanitize.text.function = force, # Important to treat content of first column as latex function
           table.placement="H"
