@@ -36,7 +36,7 @@ make_table = function(wd, param, method = "check", n_runs){
       density_table[i,] = c(result$result, result$n)
     }
     colnames(density_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
-    rownames(density_table) = as.character(density)
+    rownames(density_table) = as.character(dens)
 
     max.dist_table = matrix(data = NA, 3, 8)
     for (i in 1:length(max.dist)){
@@ -61,7 +61,7 @@ make_table = function(wd, param, method = "check", n_runs){
     table = rbind(N_table, density_table, max.dist_table, threshold_table)
     table = as.data.frame(table[,1:6])
     table = cbind(
-      grouping_paramter = c(as.character(N), as.character(density), c("1.1", "1.5", "2.0"), as.character(threshold)),
+      grouping_paramter = c(as.character(N), as.character(dens), c("1.1", "1.5", "2.0"), as.character(threshold)),
       paste0(round(table[,1], 2)," (", round(table[,2], 4),")"),
       paste0(round(table[,3], 2)," (", round(table[,4], 4),")"),
       round(table[,5], 4), round(table[,6], 4)
@@ -115,7 +115,7 @@ make_table = function(wd, param, method = "check", n_runs){
       density_table[i,] = c(result$result, result$n)
     }
     colnames(density_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
-    rownames(density_table) = as.character(density)
+    rownames(density_table) = as.character(dens)
 
     max.dist_table = matrix(data = NA, 3, 8)
     for (i in 1:length(max.dist)){
@@ -140,7 +140,7 @@ make_table = function(wd, param, method = "check", n_runs){
     table = rbind(N_table, density_table, max.dist_table, qu_table)
     table = as.data.frame(table[,1:6])
     table = cbind(
-      grouping_paramter = c(as.character(N), as.character(density), c("1.1", "1.5", "2.0"), as.character(threshold)),
+      grouping_paramter = c(as.character(N), as.character(dens), c("1.1", "1.5", "2.0"), as.character(threshold)),
       paste0(round(table[,1], 2)," (", round(table[,2], 4),")"),
       paste0(round(table[,3], 2)," (", round(table[,4], 4),")"),
       round(table[,5], 4), round(table[,6], 4)
@@ -211,7 +211,7 @@ make_table = function(wd, param, method = "check", n_runs){
     table = rbind(N_table, density_table, max.dist_table)
     table = as.data.frame(table[,1:6])
     table = cbind(
-      grouping_paramter = c(as.character(N), as.character(density), c("1.1", "1.5", "2.0"), as.character(threshold)),
+      grouping_paramter = c(as.character(N), as.character(dens), c("1.1", "1.5", "2.0"), as.character(threshold)),
       paste0(round(table[,1], 2)," (", round(table[,2], 4),")"),
       paste0(round(table[,3], 2)," (", round(table[,4], 4),")"),
       round(table[,5], 4), round(table[,6], 4)
