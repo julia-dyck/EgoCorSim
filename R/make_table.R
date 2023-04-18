@@ -67,8 +67,8 @@ make_table = function(wd, param, method = "check", n_runs){
       round(table[,5], 4), round(table[,6], 4)
     )
     colnames(table) = c("grouping parameter",
-                        paste0("\\eta_{", p_symbol[param], "}", " (Monte Carlo SE)"),
-                        paste0("\\hat{\\eta}_{", p_symbol[param], "}", " (empirical SE)"),
+                        paste0("$\\eta_{", p_symbol[param], "}$", " (Monte Carlo SE)"),
+                        paste0("$\\widehat{\\eta_{", p_symbol[param], "}}$", " (empirical SE)"),
                         "bias", "MSE")
     rownames(table) = NULL
 
@@ -146,8 +146,8 @@ make_table = function(wd, param, method = "check", n_runs){
       round(table[,5], 4), round(table[,6], 4)
     )
     colnames(table) = c("grouping parameter",
-                        paste0("\\eta_{", p_symbol[param], "}", " (Monte Carlo SE)"),
-                        paste0("\\hat{\\eta}_{", p_symbol[param], "}", " (empirical SE)"),
+                        paste0("$\\eta_{", p_symbol[param], "}$", " (Monte Carlo SE)"),
+                        paste0("$\\widehat{\\eta_{", p_symbol[param], "}}$", " (empirical SE)"),
                         "bias", "MSE")
     rownames(table) = NULL
 
@@ -217,8 +217,8 @@ make_table = function(wd, param, method = "check", n_runs){
       round(table[,5], 4), round(table[,6], 4)
     )
     colnames(table) = c("grouping parameter",
-                        paste0("\\eta_{", p_symbol[param], "}", " (Monte Carlo SE)"),
-                        paste0("\\hat{\\eta}_{", p_symbol[param], "}", " (empirical SE)"),
+                        paste0("$\\eta_{", p_symbol[param], "}$", " (Monte Carlo SE)"),
+                        paste0("$\\widehat{\\eta_{", p_symbol[param], "}}$", " (empirical SE)"),
                         "bias", "MSE")
     rownames(table) = NULL
 
