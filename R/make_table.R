@@ -194,7 +194,7 @@ make_table = function(wd, param, method = "check", n_runs){
       density_table[i,] = c(result$result, result$n)
     }
     colnames(density_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
-    rownames(density_table) = as.character(density)
+    rownames(density_table) = as.character(dens)
 
     max.dist_table = matrix(data = NA, 3, 8)
     for (i in 1:length(max.dist)){
