@@ -61,7 +61,7 @@ make_table = function(wd, param, method = "check", n_runs){
     table = rbind(N_table, density_table, max.dist_table, threshold_table)
     table = as.data.frame(table[,1:6])
     table = cbind(
-      grouping_paramter = c(as.character(N), as.character(dens), c("1.1", "1.5", "2.0"), as.character(threshold)),
+      grouping_paramter = c(as.character(N), c("low", "middle","high"), c("1.1", "1.5", "2.0"), c("1.1", "1.2", "1.5", "2.0", "2.5", "3.0")),
       paste0(round(table[,1], 2)," (", round(table[,2], 4),")"),
       paste0(round(table[,3], 2)," (", round(table[,4], 4),")"),
       round(table[,5], 4), round(table[,6], 4)
@@ -140,7 +140,7 @@ make_table = function(wd, param, method = "check", n_runs){
     table = rbind(N_table, density_table, max.dist_table, qu_table)
     table = as.data.frame(table[,1:6])
     table = cbind(
-      grouping_paramter = c(as.character(N), as.character(dens), c("1.1", "1.5", "2.0"), as.character(threshold)),
+      grouping_paramter = c(as.character(N), c("low", "middle","high"), c("1.1", "1.5", "2.0"), c("0.75","0.80","0.85","0.90","0.95","1.00")),
       paste0(round(table[,1], 2)," (", round(table[,2], 4),")"),
       paste0(round(table[,3], 2)," (", round(table[,4], 4),")"),
       round(table[,5], 4), round(table[,6], 4)
