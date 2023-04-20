@@ -86,7 +86,7 @@ make_table = function(wd, param, method = "check", n_runs){
           size = "footnotesize", #Change size; useful for bigger tables "normalsize" "footnotesize"
           include.rownames = FALSE, #Don't print rownames
           include.colnames = T,
-          caption.placement = "bottom", #"top","bottom", NULL
+          caption.placement = "top", #"top","bottom", NULL
           caption.width = "\\textwidth",
           hline.after=c(-1,nrow(table)),
           floating=TRUE, # whether \begin{Table} should be created (TRUE) or not (FALSE)
@@ -165,7 +165,7 @@ make_table = function(wd, param, method = "check", n_runs){
           size = "footnotesize", #Change size; useful for bigger tables "normalsize" "footnotesize"
           include.rownames = FALSE, #Don't print rownames
           include.colnames = T,
-          caption.placement = "bottom", #"top","bottom", NULL
+          caption.placement = "top", #"top","bottom", NULL
           caption.width = "\\textwidth",
           hline.after=c(-1,nrow(table)),
           floating=TRUE, # whether \begin{Table} should be created (TRUE) or not (FALSE)
@@ -236,7 +236,7 @@ make_table = function(wd, param, method = "check", n_runs){
           size = "footnotesize", #Change size; useful for bigger tables "normalsize" "footnotesize"
           include.rownames = FALSE, #Don't print rownames
           include.colnames = T,
-          caption.placement = "bottom", #"top","bottom", NULL
+          caption.placement = "top", #"top","bottom", NULL
           caption.width = "\\textwidth",
           hline.after=c(-1,nrow(table)),
           floating=TRUE, # whether \begin{Table} should be created (TRUE) or not (FALSE)
