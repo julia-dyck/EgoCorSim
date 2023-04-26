@@ -43,11 +43,16 @@ gen.conv.table = function(n_runs = 1:10, summary = T){
     conv_t[,1] = as.factor(conv_t[,1])
     conv_t[,2] = as.factor(conv_t[,2])
     conv_t[,3] = as.factor(conv_t[,3])
-    conv_t_summary_N = by(data = conv_t[,4:6], INDICES = list(conv_t$N), FUN = colMeans, simplify = T)
+    conv_t_summary_N = by(data = conv_t[,4:6], INDICES = list(conv_t$N), FUN = colMeans)
+    conv_t_summary_N = do.call(rbind, conv_t_summary_N)
     conv_t_summary_d = by(data = conv_t[,4:6], INDICES = list(conv_t$density), FUN = colMeans)
+    conv_t_summary_d = do.call(rbind, conv_t_summary_d)
     conv_t_summary_md = by(data = conv_t[,4:6], INDICES = list(conv_t$max..distance), FUN = colMeans)
-    conv_t_summary = rbind(conv_t_summary_N, conv_t_summary_d, conv_t_summary_md)
-    return(conv_t_summary_N)
+    conv_t_summary_md = do.call(rbind, conv_t_summary_md)
+    conv_t_summary = data.frame(rbind(conv_t_summary_N, conv_t_summary_d, conv_t_summary_md))
+    conv_t_summary$n_sim = conv_t_summary$n_sim*9
+    conv_t_summary$n_sim_tilde = conv_t_summary$n_sim_tilde*9
+    return(conv_t_summary)
   }
 }
 
