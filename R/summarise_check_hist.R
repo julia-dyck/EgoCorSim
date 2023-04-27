@@ -1,11 +1,8 @@
 #' Compute summary statistics for the simulation of the check based method
 #'
 #' @param wd working directory were ALL the simulation files lie
-#' @param N Number of observations (500, 1000, 2000)
-#' @param density Sampling density (1, 4, 9)
-#' @param max.dist Maximum distance (457, 624, 832)
 #' @param thr Threshold factor (here only scalar possible)
-#' @param param Selects the desired parameter (1 = nugget, 2 = partial_sill, 3 = shape)
+#' @param path Path the the directory where plot is saved
 #' @param n_runs Number of seperate files for each scenario
 #' @param filter Vector for kicking out models
 #'
@@ -159,7 +156,7 @@ summarise_check_hist = function(wd = "/Users/jan-ole/R/Boot", thr = 1.1, path = 
     s.sd = data_f[,which(colnames(data_f) == paste0("s.sd_check_", thr))]
   )
 
-  file = paste0(path, "/emp_dist_parests_and_seests_", thr, ".pdf")
+  file = paste0(path, "/emp_dist_parests_and_seests_check_", thr, ".pdf")
 
   pdf(file = file,width = 9, height = 6)
 
