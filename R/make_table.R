@@ -246,7 +246,4 @@ make_table = function(wd, param, method = "check", n_runs){
 
     return(invisible(list(sample_size = N_table, density = density_table, maximal_distance = max.dist_table)))
   }
-
-
-
 }
