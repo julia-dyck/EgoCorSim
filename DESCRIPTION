@@ -18,7 +18,8 @@ Imports:
     stats,
     BRISC, 
     EgoCor, 
-    methods
+    methods,
+    latex2exp
 Suggests:
     knitr,
     rmarkdown,
