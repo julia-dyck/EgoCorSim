@@ -169,7 +169,7 @@ summarise_q = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
   }
 
 
-  # if threshold is specified
+  # if quantile is specified
   if(!is.null(qu) & is.null(N) & is.null(max.dist) & is.null(density)){
     load(file = paste0("boot_result_500_1_457_", 1, ".RData"))
     d1 = result
