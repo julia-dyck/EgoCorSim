@@ -36,7 +36,7 @@ make_table = function(wd, param, method = "check", n_runs){
       density_table[i,] = c(result$result, result$n)
     }
     colnames(density_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
-    rownames(density_table) = as.character(density)
+    rownames(density_table) = as.character(dens)
 
     max.dist_table = matrix(data = NA, 3, 8)
     for (i in 1:length(max.dist)){
@@ -61,14 +61,14 @@ make_table = function(wd, param, method = "check", n_runs){
     table = rbind(N_table, density_table, max.dist_table, threshold_table)
     table = as.data.frame(table[,1:6])
     table = cbind(
-      grouping_paramter = c(as.character(N), as.character(density), c("1.1", "1.5", "2.0"), as.character(threshold)),
+      grouping_paramter = c(as.character(N), c("low", "middle","high"), c("1.1", "1.5", "2.0"), c("1.1", "1.2", "1.5", "2.0", "2.5", "3.0")),
       paste0(round(table[,1], 2)," (", round(table[,2], 4),")"),
       paste0(round(table[,3], 2)," (", round(table[,4], 4),")"),
       round(table[,5], 4), round(table[,6], 4)
     )
     colnames(table) = c("grouping parameter",
-                        paste0("\\eta_{", p_symbol[param], "}", " (Monte Carlo SE)"),
-                        paste0("\\hat{\\eta}_{", p_symbol[param], "}", " (empirical SE)"),
+                        paste0("$\\eta_{", p_symbol[param], "}$", " (Monte Carlo SE)"),
+                        paste0("$\\widehat{\\eta_{", p_symbol[param], "}}$", " (empirical SE)"),
                         "bias", "MSE")
     rownames(table) = NULL
 
@@ -86,9 +86,9 @@ make_table = function(wd, param, method = "check", n_runs){
           size = "footnotesize", #Change size; useful for bigger tables "normalsize" "footnotesize"
           include.rownames = FALSE, #Don't print rownames
           include.colnames = T,
-          caption.placement = "bottom", #"top","bottom", NULL
+          caption.placement = "top", #"top","bottom", NULL
           caption.width = "\\textwidth",
-          hline.after=c(-1,nrow(t)), #We don't need hline; we use booktabs -> NULL,
+          hline.after=c(-1,nrow(table)),
           floating=TRUE, # whether \begin{Table} should be created (TRUE) or not (FALSE)
           sanitize.text.function = force, # Important to treat content of first column as latex function
           table.placement="H"
@@ -115,7 +115,7 @@ make_table = function(wd, param, method = "check", n_runs){
       density_table[i,] = c(result$result, result$n)
     }
     colnames(density_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
-    rownames(density_table) = as.character(density)
+    rownames(density_table) = as.character(dens)
 
     max.dist_table = matrix(data = NA, 3, 8)
     for (i in 1:length(max.dist)){
@@ -140,14 +140,14 @@ make_table = function(wd, param, method = "check", n_runs){
     table = rbind(N_table, density_table, max.dist_table, qu_table)
     table = as.data.frame(table[,1:6])
     table = cbind(
-      grouping_paramter = c(as.character(N), as.character(density), c("1.1", "1.5", "2.0"), as.character(threshold)),
+      grouping_paramter = c(as.character(N), c("low", "middle","high"), c("1.1", "1.5", "2.0"), c("0.75","0.80","0.85","0.90","0.95","1.00")),
       paste0(round(table[,1], 2)," (", round(table[,2], 4),")"),
       paste0(round(table[,3], 2)," (", round(table[,4], 4),")"),
       round(table[,5], 4), round(table[,6], 4)
     )
     colnames(table) = c("grouping parameter",
-                        paste0("\\eta_{", p_symbol[param], "}", " (Monte Carlo SE)"),
-                        paste0("\\hat{\\eta}_{", p_symbol[param], "}", " (empirical SE)"),
+                        paste0("$\\eta_{", p_symbol[param], "}$", " (Monte Carlo SE)"),
+                        paste0("$\\widehat{\\eta_{", p_symbol[param], "}}$", " (empirical SE)"),
                         "bias", "MSE")
     rownames(table) = NULL
 
@@ -165,9 +165,9 @@ make_table = function(wd, param, method = "check", n_runs){
           size = "footnotesize", #Change size; useful for bigger tables "normalsize" "footnotesize"
           include.rownames = FALSE, #Don't print rownames
           include.colnames = T,
-          caption.placement = "bottom", #"top","bottom", NULL
+          caption.placement = "top", #"top","bottom", NULL
           caption.width = "\\textwidth",
-          hline.after=c(-1,nrow(t)), #We don't need hline; we use booktabs -> NULL,
+          hline.after=c(-1,nrow(table)),
           floating=TRUE, # whether \begin{Table} should be created (TRUE) or not (FALSE)
           sanitize.text.function = force, # Important to treat content of first column as latex function
           table.placement="H"
@@ -194,7 +194,7 @@ make_table = function(wd, param, method = "check", n_runs){
       density_table[i,] = c(result$result, result$n)
     }
     colnames(density_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
-    rownames(density_table) = as.character(density)
+    rownames(density_table) = as.character(dens)
 
     max.dist_table = matrix(data = NA, 3, 8)
     for (i in 1:length(max.dist)){
@@ -211,14 +211,14 @@ make_table = function(wd, param, method = "check", n_runs){
     table = rbind(N_table, density_table, max.dist_table)
     table = as.data.frame(table[,1:6])
     table = cbind(
-      grouping_paramter = c(as.character(N), as.character(density), c("1.1", "1.5", "2.0"), as.character(threshold)),
+      grouping_paramter = c(as.character(N), as.character(dens), c("1.1", "1.5", "2.0"), as.character(threshold)),
       paste0(round(table[,1], 2)," (", round(table[,2], 4),")"),
       paste0(round(table[,3], 2)," (", round(table[,4], 4),")"),
       round(table[,5], 4), round(table[,6], 4)
     )
     colnames(table) = c("grouping parameter",
-                        paste0("\\eta_{", p_symbol[param], "}", " (Monte Carlo SE)"),
-                        paste0("\\hat{\\eta}_{", p_symbol[param], "}", " (empirical SE)"),
+                        paste0("$\\eta_{", p_symbol[param], "}$", " (Monte Carlo SE)"),
+                        paste0("$\\widehat{\\eta_{", p_symbol[param], "}}$", " (empirical SE)"),
                         "bias", "MSE")
     rownames(table) = NULL
 
@@ -236,9 +236,9 @@ make_table = function(wd, param, method = "check", n_runs){
           size = "footnotesize", #Change size; useful for bigger tables "normalsize" "footnotesize"
           include.rownames = FALSE, #Don't print rownames
           include.colnames = T,
-          caption.placement = "bottom", #"top","bottom", NULL
+          caption.placement = "top", #"top","bottom", NULL
           caption.width = "\\textwidth",
-          hline.after=c(-1,nrow(t)), #We don't need hline; we use booktabs -> NULL,
+          hline.after=c(-1,nrow(table)),
           floating=TRUE, # whether \begin{Table} should be created (TRUE) or not (FALSE)
           sanitize.text.function = force, # Important to treat content of first column as latex function
           table.placement="H"

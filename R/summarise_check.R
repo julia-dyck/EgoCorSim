@@ -417,7 +417,6 @@ names(out) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empir
 
 ns = c(n_sim, n_sim_tilde)
 names(ns) = c("n_sim", "n_sim_tilde")
-
-return(list(n = ns, result = out))
+return(list(n = ns, result = out, data_nsim = data_f))
 }
 
