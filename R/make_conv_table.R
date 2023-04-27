@@ -10,7 +10,7 @@
 #' @return Returns a list containing the n's and the result
 #' @export
 
-gen.conv.table = function(n_runs = 1:10, summary = T){
+make_convtable = function(n_runs = 1:10, summary = T){
   pc = expand.grid(max.dist = c(457, 624, 832),
                    dens = c(1, 4, 9),
                    N = c(500, 1000, 2000)
