@@ -57,6 +57,3 @@ make_convtable = function(n_runs = 1:10, summary = T){
 }
 
 
-t = gen.conv.table(summary = F)
-t= gen.conv.table(summary = T)
-t
