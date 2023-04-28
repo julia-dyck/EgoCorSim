@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-summarise_q = function(wd = "/Users/jan-ole/R/Boot", qu = NULL, path = "/Users/jan-ole/R/Boot",
+summarise_q_hist = function(wd = "/Users/jan-ole/R/Boot", qu = NULL, path = "/Users/jan-ole/R/Boot",
                        n_runs = 10, filter = c(1000, 1000, 1000)){
   setwd(wd)
 
