@@ -155,6 +155,7 @@ summarise_check_hist = function(wd = "/Users/jan-ole/R/Boot", thr = 1.1, path = 
     ps.sd = data_f[,which(colnames(data_f) == paste0("ps.sd_check_", thr))],
     s.sd = data_f[,which(colnames(data_f) == paste0("s.sd_check_", thr))]
   )
+  true_values = c(60,40,200, sd(res[,1]), sd(res[,2]), sd(res[,3]))
 
   file = paste0(path, "/emp_dist_parests_and_seests_check_", thr, ".pdf")
 
@@ -178,12 +179,16 @@ summarise_check_hist = function(wd = "/Users/jan-ole/R/Boot", thr = 1.1, path = 
          xlab = xlabels[colu])
 
     abline(v = mean(r), col = "red", lty = 2, lwd = 2)
-    abline(v = quantile(r, c(0.5)), col = "blue", lty = 3, lwd = 2)
-    lines(seq(0, max(r), by = 0.1), dnorm(seq(0, max(r), by = 0.1), mean(r),sd(r)), lty = 1, lwd = 2)
+    abline(v = true_values[colu], col = "blue", lty = 1, lwd = 2)
+    lines(seq(0, max(r), by = 0.1), dnorm(seq(0, max(r), by = 0.1), mean(r),sd(r)),
+          lty = 1, lwd = 2, col = "red")
     if(colu == 3){
-      legend("topright", legend = c("mean", "median", "normal", "density"),
-             col = c("red","blue","black", "white"), lty = c(2,3,1,1), lwd = 2, cex = 0.6)
-
+      legend("topright", legend = c("true value", "mean", "normal", "density"),
+             col = c("blue", "red", "red", "white"), lty = c(1,1,1,1), lwd = 2, cex = 0.6)
+    }
+    if(colu == 6){
+      legend("topright", legend = c("empirical sd", "mean se", "normal", "density"),
+             col = c("blue", "red", "red", "white"), lty = c(1,1,1,1), lwd = 2, cex = 0.6)
     }
   }
   dev.off()
@@ -202,12 +207,16 @@ summarise_check_hist = function(wd = "/Users/jan-ole/R/Boot", thr = 1.1, path = 
          xlab = xlabels[colu])
 
     abline(v = mean(r), col = "red", lty = 2, lwd = 2)
-    abline(v = quantile(r, c(0.5)), col = "blue", lty = 3, lwd = 2)
-    lines(seq(0, max(r), by = 0.1), dnorm(seq(0, max(r), by = 0.1), mean(r),sd(r)), lty = 1, lwd = 2)
+    abline(v = true_values[colu], col = "blue", lty = 1, lwd = 2)
+    lines(seq(0, max(r), by = 0.1), dnorm(seq(0, max(r), by = 0.1), mean(r),sd(r)),
+          lty = 1, lwd = 2, col = "red")
     if(colu == 3){
-      legend("topright", legend = c("mean", "median", "normal", "density"),
-             col = c("red","blue","black", "white"), lty = c(2,3,1,1), lwd = 2, cex = 0.6)
-
+      legend("topright", legend = c("true value", "mean", "normal", "density"),
+             col = c("blue", "red", "red", "white"), lty = c(1,1,1,1), lwd = 2, cex = 0.6)
+    }
+    if(colu == 6){
+      legend("topright", legend = c("empirical sd", "mean se", "normal", "density"),
+             col = c("blue", "red", "red", "white"), lty = c(1,1,1,1), lwd = 2, cex = 0.6)
     }
   }
 }
