@@ -10,7 +10,7 @@
 #' @return Returns a list containing the n's and the result
 #' @export
 
-make_convtable = function(n_runs = 1:10, summary = T){
+make_convtable = function(n_runs = 1:10, summary = T, kick_equal0 = F){
   pc = expand.grid(max.dist = c(457, 624, 832),
                    dens = c(1, 4, 9),
                    N = c(500, 1000, 2000)
@@ -25,7 +25,8 @@ make_convtable = function(n_runs = 1:10, summary = T){
                              dens = pc[i,2],
                              max.dist = pc[i,3],
                              n_runs = 1:10,
-                             filter = c(rep(0,3), rep(1000,3)))
+                             filter = c(rep(0,3), rep(1000,3)),
+                             kick_equal0 = kick_equal0)
     conv_t[i,] = c(N = pc[i,1], density = pc[i,2], max.dist = pc[i,3],
                    n_sim = res[[i]]$n_sim,
                    removed_lower = res[[i]]$removed_lower_thr,
@@ -33,9 +34,18 @@ make_convtable = function(n_runs = 1:10, summary = T){
                    n_sim_tilde = res[[i]]$n_sim_tilde,
                    conv.rate = res[[i]]$n_sim_tilde/res[[i]]$n_sim)
   }
-  colnames(conv_t) = c("N", "density", "max.distance",
-                       "n_sim", "n_smallerequal0", "n_larger1000",
-                       "n_sim_tilde", "conv.rate")
+  if(kick_equal0 = T){
+    colnames(conv_t) = c("N", "density", "max.distance",
+                         "n_sim", "n_smallerequal0", "n_larger1000",
+                         "n_sim_tilde", "conv.rate")
+  }
+  else{
+    colnames(conv_t) = c("N", "density", "max.distance",
+                         "n_sim", "n_smaller0", "n_larger1000",
+                         "n_sim_tilde", "conv.rate")
+  }
+
+
   conv_t = data.frame(conv_t)
 
   if(summary == F){
@@ -108,8 +118,14 @@ make_convtable = function(n_runs = 1:10, summary = T){
                     0
     )
     conv_ts = data.frame(conv_ts)
-    colnames(conv_ts) = c("parameter", "n_sim", "n_smallerequal0", "n_larger1000",
-                          "n_sim_tilde", "conv.rate")
+    if(kick_equal0 = T){
+      colnames(conv_ts) = c("parameter", "n_sim", "n_smallerequal0", "n_larger1000",
+                            "n_sim_tilde", "conv.rate")
+    }
+    else{
+      colnames(conv_ts) = c("parameter", "n_sim", "n_smaller0", "n_larger1000",
+                            "n_sim_tilde", "conv.rate")
+    }
     conv_ts$conv.rate = conv_ts$n_sim_tilde/conv_ts$n_sim
     return(conv_ts)
 
@@ -117,6 +133,8 @@ make_convtable = function(n_runs = 1:10, summary = T){
   }
 }
 
-round(make_convtable(),2)
-
+# round(make_convtable(summary = T, kick_equal0 = T),2)
+# round(make_convtable(summary = T, kick_equal0 = F),2)
+# round(make_convtable(summary = F, kick_equal0 = T),2)
+# round(make_convtable(summary = F, kick_equal0 = F),2)
 

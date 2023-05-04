@@ -16,7 +16,8 @@ load_scenario = function(wd = "D:/Sciebo/EgoCorSim_mit_Ole",
                          dens = 1,
                          max.dist = 457,
                          n_runs = 1:10,
-                         filter = c(rep(0,3), rep(1000,3))){
+                         filter = c(rep(0,3), rep(1000,3)),
+                         kick_equal0 = F){
   # load the first batch
   filename = paste0(wd, "/", "boot_result_",
                     N, "_", dens, "_", max.dist, "_",
@@ -39,9 +40,16 @@ load_scenario = function(wd = "D:/Sciebo/EgoCorSim_mit_Ole",
                 df$shape_check < filter[6]), ]
   n_sim_tilde_interm = nrow(df)
   # filtering the data: Only models where all estimates are >= 0
-  df = df[which(df$nugget_check >= filter[1] &
-                df$partial_sill_check >= filter[2] &
-                df$shape_check >= filter[3]), ]
+  if(kick_equal0 == T){
+    df = df[which(df$nugget_check > filter[1] &
+                    df$partial_sill_check > filter[2] &
+                    df$shape_check > filter[3]), ]
+  }
+  if(kick_equal0 == F){
+    df = df[which(df$nugget_check >= filter[1] &
+                    df$partial_sill_check >= filter[2] &
+                    df$shape_check >= filter[3]), ]
+  }
   n_sim_tilde = nrow(df)
   return(list(data = df,
               n_sim = n_sim,
