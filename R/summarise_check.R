@@ -331,7 +331,7 @@ if(is.null(thr)){
   }
 
   if(param == 2){ # partial_sill
-    mc = mean(data_f$partial_sill_check)
+    mc = sd(data_f$partial_sill_check)
     emp_se = mean(
       c(data_f[,which(colnames(data_f) == paste0("ps.sd_check_", 1.1))],
         data_f[,which(colnames(data_f) == paste0("ps.sd_check_", 1.2))],
@@ -351,7 +351,7 @@ if(is.null(thr)){
   }
 
   if(param == 3){ # shape
-    mc = mean(data_f$shape_check)
+    mc = sd(data_f$shape_check)
     emp_se = mean(
       c(data_f[,which(colnames(data_f) == paste0("s.sd_check_", 1.1))],
         data_f[,which(colnames(data_f) == paste0("s.sd_check_", 1.2))],
@@ -387,7 +387,7 @@ if(!is.null(thr)){
   }
 
   if(param == 2){ # partial_sill
-    mc = mean(data_f$partial_sill_check)
+    mc = sd(data_f$partial_sill_check)
     emp_se = mean(
       data_f[,which(colnames(data_f) == paste0("ps.sd_check_", thr))]
     )
@@ -397,7 +397,7 @@ if(!is.null(thr)){
   }
 
   if(param == 3){ # shape
-    mc = mean(data_f$shape_check)
+    mc = sd(data_f$shape_check)
     emp_se = mean(
       data_f[,which(colnames(data_f) == paste0("s.sd_check_", thr))]
     )

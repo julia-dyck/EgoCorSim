@@ -187,13 +187,13 @@ summarise_BRISC = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
   }
 
   if(param == 2){ # partial_sill
-    mc = mean(data_f$partial_sill_brisc)
+    mc = sd(data_f$partial_sill_brisc)
     emp_se = mean(data_f$ps.sd_brisc)
     se_emp_se = sd(data_f$ps.sd_brisc)
   }
 
   if(param == 3){ # shape
-    mc = mean(data_f$shape_brisc)
+    mc = sd(data_f$shape_brisc)
     emp_se = mean(data_f$s.sd_brisc)
     se_emp_se = sd(data_f$s.sd_brisc)
   }

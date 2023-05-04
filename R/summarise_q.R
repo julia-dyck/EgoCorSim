@@ -331,7 +331,7 @@ summarise_q = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
     }
 
     if(param == 2){ # partial_sill
-      mc = mean(data_f$partial_sill_q)
+      mc = sd(data_f$partial_sill_q)
       emp_se = mean(
         c(data_f[,which(colnames(data_f) == paste0("ps.sd.q_q_", 1))],
           data_f[,which(colnames(data_f) == paste0("ps.sd.q_q_", 0.95))],
@@ -351,7 +351,7 @@ summarise_q = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
     }
 
     if(param == 3){ # shape
-      mc = mean(data_f$shape_q)
+      mc = sd(data_f$shape_q)
       emp_se = mean(
         c(data_f[,which(colnames(data_f) == paste0("s.sd.q_q_", 1))],
           data_f[,which(colnames(data_f) == paste0("s.sd.q_q_", 0.95))],
@@ -387,7 +387,7 @@ summarise_q = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
     }
 
     if(param == 2){ # partial_sill
-      mc = mean(data_f$partial_sill_q)
+      mc = sd(data_f$partial_sill_q)
       emp_se = mean(
         data_f[,which(colnames(data_f) == paste0("ps.sd.q_q_", qu))]
       )
@@ -397,7 +397,7 @@ summarise_q = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
     }
 
     if(param == 3){ # shape
-      mc = mean(data_f$shape_q)
+      mc = sd(data_f$shape_q)
       emp_se = mean(
         data_f[,which(colnames(data_f) == paste0("s.sd.q_q_", qu))]
       )
