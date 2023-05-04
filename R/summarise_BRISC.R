@@ -174,9 +174,9 @@ summarise_BRISC = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
   n_sim = nrow(data)
 
   # filtering the data: Only models where all estimates are < the selected value (default 1000)
-  data_f = data[which(data$nugget_check < filter[1] &
-                        data$partial_sill_check < filter[2] &
-                        data$shape_check < filter[3]), ]
+  data_f = data[which(data$nugget_brisc < filter[1] &
+                        data$partial_sill_brisc < filter[2] &
+                        data$shape_brisc < filter[3]), ]
 
   n_sim_tilde = nrow(data_f)
 
