@@ -34,7 +34,7 @@ make_convtable = function(n_runs = 1:10, summary = T, kick_equal0 = F){
                    n_sim_tilde = res[[i]]$n_sim_tilde,
                    conv.rate = res[[i]]$n_sim_tilde/res[[i]]$n_sim)
   }
-  if(kick_equal0 = T){
+  if(kick_equal0 == T){
     colnames(conv_t) = c("N", "density", "max.distance",
                          "n_sim", "n_smallerequal0", "n_larger1000",
                          "n_sim_tilde", "conv.rate")
@@ -118,7 +118,7 @@ make_convtable = function(n_runs = 1:10, summary = T, kick_equal0 = F){
                     0
     )
     conv_ts = data.frame(conv_ts)
-    if(kick_equal0 = T){
+    if(kick_equal0 == T){
       colnames(conv_ts) = c("parameter", "n_sim", "n_smallerequal0", "n_larger1000",
                             "n_sim_tilde", "conv.rate")
     }
