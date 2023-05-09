@@ -6,6 +6,7 @@
 #' @param max.dist Maximum distance (457, 624, 832)
 #' @param n_runs Number of seperate files for each scenario
 #' @param filter Vector with upper non-convergence threshold for kicking out models
+#' @param kick_equal0 kick out simulation results with parameter estimates < or = 0 for at least one parameter
 #'
 #' @return Returns a list containing the n's and the result
 #' @export
