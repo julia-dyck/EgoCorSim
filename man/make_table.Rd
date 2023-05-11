@@ -4,7 +4,7 @@
 \alias{make_table}
 \title{Creating result table for simulation study fast}
 \usage{
-make_table(wd, param, method = "check", n_runs)
+make_table(wd, param, method = "check", n_runs, kick_equal0)
 }
 \arguments{
 \item{wd}{working directory were ALL the simulation files lie}
