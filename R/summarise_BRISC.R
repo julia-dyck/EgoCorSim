@@ -221,6 +221,6 @@ summarise_BRISC = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
   ns = c(n_sim, n_sim_tilde)
   names(ns) = c("n_sim", "n_sim_tilde")
 
-  return(list(n = ns, result = out))
+  return(list(n = ns, result = out, data_nsim = data_f))
 }
 
