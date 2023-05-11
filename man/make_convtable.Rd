@@ -4,7 +4,7 @@
 \alias{make_convtable}
 \title{convergence rate table}
 \usage{
-make_convtable(n_runs = 1:10, summary = T)
+make_convtable(n_runs = 1:10, summary = T, kick_equal0 = F)
 }
 \arguments{
 \item{n_runs}{Number of seperate files for each scenario}

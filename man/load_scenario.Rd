@@ -10,7 +10,8 @@ load_scenario(
   dens = 1,
   max.dist = 457,
   n_runs = 1:10,
-  filter = rep(1000, 3)
+  filter = c(rep(0, 3), rep(1000, 3)),
+  kick_equal0 = F
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ load_scenario(
 \item{n_runs}{Number of seperate files for each scenario}
 
 \item{filter}{Vector with upper non-convergence threshold for kicking out models}
+
+\item{kick_equal0}{kick out simulation results with parameter estimates < or = 0 for at least one parameter}
 }
 \value{
 Returns a list containing the n's and the result
