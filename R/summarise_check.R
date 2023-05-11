@@ -16,7 +16,8 @@
 summarise_check = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
                      density = NULL, max.dist = NULL, thr = NULL,
                      param,
-                     n_runs = 10, filter = c(1000, 1000, 1000)){
+                     n_runs = 10, filter = c(1000, 1000, 1000),
+                     kick_equal0 = F){
 setwd(wd)
 
 # Loading the datasets ----------------------------------------------------
@@ -300,10 +301,23 @@ if(!is.null(thr) & is.null(N) & is.null(max.dist) & is.null(density)){
 
 n_sim = nrow(data)
 
-# filtering the data: Only models where all estimates are < the selected value (default 1000)
+# filtering the data: Only models where all estimates are
+# >= or > the lower support boundary 0
+# < the selected value (default 1000)
 data_f = data[which(data$nugget_check < filter[1] &
-                      data$partial_sill_check < filter[2] &
-                      data$shape_check < filter[3]), ]
+                    data$partial_sill_check < filter[2] &
+                    data$shape_check < filter[3]), ]
+
+if(kick_equal0 == F){
+  data_f = data_f[which(0 <= data_f$nugget_check &
+                        0 <= data_f$partial_sill_check &
+                        0 <= data_f$shape_check), ]
+}
+if(kick_equal0 == T){
+  data_f = data_f[which(0 < data_f$nugget_check &
+                        0 < data_f$partial_sill_check &
+                        0 < data_f$shape_check), ]
+}
 
 n_sim_tilde = nrow(data_f)
 

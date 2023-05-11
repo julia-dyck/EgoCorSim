@@ -16,7 +16,8 @@
 summarise_q = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
                        density = NULL, max.dist = NULL, qu = NULL,
                        param,
-                       n_runs = 10, filter = c(1000, 1000, 1000)){
+                       n_runs = 10, filter = c(1000, 1000, 1000),
+                       kick_equal0 = F){
   setwd(wd)
 
   # Loading the datasets ----------------------------------------------------
@@ -304,6 +305,17 @@ summarise_q = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
   data_f = data[which(data$nugget_q < filter[1] &
                         data$partial_sill_q < filter[2] &
                         data$shape_q < filter[3]), ]
+
+  if(kick_equal0 == F){
+    data_f = data_f[which(0 <= data_f$nugget_q &
+                          0 <= data_f$partial_sill_q &
+                          0 <= data_f$shape_q), ]
+  }
+  if(kick_equal0 == T){
+    data_f = data_f[which(0 < data_f$nugget_q &
+                          0 < data_f$partial_sill_q &
+                          0 < data_f$shape_q), ]
+  }
 
   n_sim_tilde = nrow(data_f)
 

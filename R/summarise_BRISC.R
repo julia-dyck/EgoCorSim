@@ -15,7 +15,8 @@
 summarise_BRISC = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
                            density = NULL, max.dist = NULL,
                            param,
-                           n_runs = 10, filter = c(1000, 1000, 1000)){
+                           n_runs = 10, filter = c(1000, 1000, 1000),
+                           kick_equal0 = F){
   setwd(wd)
 
   # Loading the datasets ----------------------------------------------------
@@ -177,6 +178,17 @@ summarise_BRISC = function(wd = "/Users/jan-ole/R/Boot", N = NULL,
   data_f = data[which(data$nugget_brisc < filter[1] &
                         data$partial_sill_brisc < filter[2] &
                         data$shape_brisc < filter[3]), ]
+
+  if(kick_equal0 == F){
+    data_f = data_f[which(0 <= data_f$nugget_brisc &
+                          0 <= data_f$partial_sill_brisc &
+                          0 <= data_f$shape_brisc), ]
+  }
+  if(kick_equal0 == T){
+    data_f = data_f[which(0 < data_f$nugget_brisc &
+                          0 < data_f$partial_sill_brisc &
+                          0 < data_f$shape_brisc), ]
+  }
 
   n_sim_tilde = nrow(data_f)
 
