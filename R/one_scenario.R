@@ -15,7 +15,7 @@
 
 one_scenario = function(input, cr, nbins, B = 1000,
                          threshold.factor = c(1.1, 1.2, 1.5, 2.0, 2.5, 3.0),
-                         qu = seq(from = 0.75, to = 1, by = 0.05),
+                         qu = seq(from = 1, to = 0.75, by = 0.05),
                          n_sim){
   N = input[1]
   nr_divisions = input[2]
