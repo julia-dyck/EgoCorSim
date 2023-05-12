@@ -9,7 +9,8 @@ summarise_q_hist(
   qu = NULL,
   path = "/Users/jan-ole/R/Boot",
   n_runs = 10,
-  filter = c(1000, 1000, 1000)
+  filter = c(1000, 1000, 1000),
+  kick_equal0 = F
 )
 }
 \arguments{

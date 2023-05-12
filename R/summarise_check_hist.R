@@ -10,8 +10,12 @@
 #' @export
 #'
 #' @examples
-summarise_check_hist = function(wd = "/Users/jan-ole/R/Boot", thr = 1.1, path = "/Users/jan-ole/R/Boot",
-                           n_runs = 10, filter = c(1000, 1000, 1000)){
+summarise_check_hist = function(wd = "/Users/jan-ole/R/Boot",
+                                thr = 1.1,
+                                path = "/Users/jan-ole/R/Boot",
+                                n_runs = 10,
+                                filter = c(1000, 1000, 1000),
+                                kick_equal0 = F){
   setwd(wd)
 
   # Loading the datasets ----------------------------------------------------
@@ -145,6 +149,17 @@ summarise_check_hist = function(wd = "/Users/jan-ole/R/Boot", thr = 1.1, path = 
   data_f = data[which(data$nugget_check < filter[1] &
                         data$partial_sill_check < filter[2] &
                         data$shape_check < filter[3]), ]
+  if(kick_equal0 == F){
+    data_f = data_f[which(0 <= data_f$nugget_check &
+                            0 <= data_f$partial_sill_check &
+                            0 <= data_f$shape_check), ]
+  }
+  if(kick_equal0 == T){
+    data_f = data_f[which(0 < data_f$nugget_check &
+                            0 < data_f$partial_sill_check &
+                            0 < data_f$shape_check), ]
+  }
+
   n_sim_tilde = nrow(data_f)
 
   res = data.frame(
