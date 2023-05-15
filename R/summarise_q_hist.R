@@ -172,7 +172,16 @@ summarise_q_hist = function(wd = "/Users/jan-ole/R/Boot",
     s.sd = data_f[,which(colnames(data_f) == paste0("s.sd.q_q_", qu))]
   )
 
-  file = paste0(path, "/emp_dist_parests_and_seests_q_", qu, ".pdf")
+  # compensate qu order colname error for sd.q s:
+  if(qu == 1){file = paste0(path, "/emp_dist_parests_and_seests_q_", 0.75, ".pdf")}
+  if(qu == 0.95){file = paste0(path, "/emp_dist_parests_and_seests_q_", 0.80, ".pdf")}
+  if(qu == 0.9){file = paste0(path, "/emp_dist_parests_and_seests_q_", 0.85, ".pdf")}
+  if(qu == 0.85){file = paste0(path, "/emp_dist_parests_and_seests_q_", 0.90, ".pdf")}
+  if(qu == 0.8){file = paste0(path, "/emp_dist_parests_and_seests_q_", 0.95, ".pdf")}
+  if(qu == 0.75){file = paste0(path, "/emp_dist_parests_and_seests_q_", 1.00, ".pdf")}
+
+  # use this line, when qu order is fixed:
+  #file = paste0(path, "/emp_dist_parests_and_seests_q_", qu, ".pdf")
 
   pdf(file = file,width = 9, height = 6)
 
