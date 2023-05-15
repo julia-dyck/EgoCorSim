@@ -8,6 +8,7 @@
 #' @param param Selects the desired parameter (1 = nugget, 2 = partial_sill, 3 = shape)
 #' @param n_runs Number of seperate files for each scenario
 #' @param filter Vector for kicking out models
+#' @param graphic binary: if TRUE, histograms are produced; if FALSE, only summary of data base for histograms is returned
 #'
 #' @return Returns a list containing the n's and the result
 #' @export
@@ -17,7 +18,8 @@ summarise_q_hist = function(wd = "/Users/jan-ole/R/Boot",
                             qu = NULL,
                             path = "/Users/jan-ole/R/Boot",
                             n_runs = 10, filter = c(1000, 1000, 1000),
-                            kick_equal0 = F){
+                            kick_equal0 = F,
+                            graphic = T){
   setwd(wd)
 
   # Loading the datasets ----------------------------------------------------
@@ -171,6 +173,7 @@ summarise_q_hist = function(wd = "/Users/jan-ole/R/Boot",
     ps.sd = data_f[,which(colnames(data_f) == paste0("ps.sd.q_q_", qu))],
     s.sd = data_f[,which(colnames(data_f) == paste0("s.sd.q_q_", qu))]
   )
+  if(graphic == F){return(res)} # investigate value ranges
 
   # compensate qu order colname error for sd.q s:
   if(qu == 1){file = paste0(path, "/emp_dist_parests_and_seests_q_", 0.75, ".pdf")}
