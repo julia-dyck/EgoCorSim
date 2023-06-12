@@ -60,8 +60,8 @@ load_scenario = function(wd = "D:/Sciebo/EgoCorSim_mit_Ole",
               removed_lower_thr = n_sim_tilde_interm - n_sim_tilde))
 }
 
-dat = load_scenario()
-dat[[1]]
-dat[[2]]
-dat[[3]]
-dat[[4]]
+#dat = load_scenario()
+#dat[[1]]
+#dat[[2]]
+#dat[[3]]
+#dat[[4]]

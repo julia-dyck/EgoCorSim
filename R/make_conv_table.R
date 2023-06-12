@@ -24,7 +24,7 @@ make_convtable = function(n_runs = 1:10, summary = T, kick_equal0 = F){
                              N = pc[i,1],
                              dens = pc[i,2],
                              max.dist = pc[i,3],
-                             n_runs = 1:10,
+                             n_runs = n_runs,
                              filter = c(rep(0,3), rep(1000,3)),
                              kick_equal0 = kick_equal0)
     conv_t[i,] = c(N = pc[i,1], density = pc[i,2], max.dist = pc[i,3],
@@ -133,8 +133,11 @@ make_convtable = function(n_runs = 1:10, summary = T, kick_equal0 = F){
   }
 }
 
-# round(make_convtable(summary = T, kick_equal0 = T),2)
-# round(make_convtable(summary = T, kick_equal0 = F),2)
-# round(make_convtable(summary = F, kick_equal0 = T),2)
-# round(make_convtable(summary = F, kick_equal0 = F),2)
+# round(make_convtable(n_runs = 1:10, summary = T, kick_equal0 = T),2)
+# round(make_convtable(n_runs = 1:10, summary = T, kick_equal0 = F),2)
+# round(make_convtable(n_runs = 1:10, summary = F, kick_equal0 = T),2)
+# round(make_convtable(n_runs = 1:10, summary = F, kick_equal0 = F),2)
 
+
+# round(make_convtable(n_runs = 1:15, summary = T, kick_equal0 = T),2)
+# round(make_convtable(n_runs = 1:15, summary = F, kick_equal0 = T),2)
