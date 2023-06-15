@@ -175,6 +175,8 @@ summarise_q_hist = function(wd = "/Users/jan-ole/R/Boot",
   )
   if(graphic == F){return(res)} # investigate value ranges
 
+  true_values = c(60,40,200, sd(res[,1]), sd(res[,2]), sd(res[,3]))
+
   # compensate qu order colname error for sd.q s:
   if(qu == 1){file = paste0(path, "/emp_dist_parests_and_seests_q_", 0.75, ".pdf")}
   if(qu == 0.95){file = paste0(path, "/emp_dist_parests_and_seests_q_", 0.80, ".pdf")}
@@ -204,39 +206,30 @@ summarise_q_hist = function(wd = "/Users/jan-ole/R/Boot",
          main = mains[colu],
          breaks = br, prob = T,
          xlab = xlabels[colu])
+    if(colu == 1 || colu == 2 || colu == 3){
+      abline(v = mean(r), col = "blue", lty = 1, lwd = 2)
+      abline(v = mean(r)-sd(r), col = "blue", lty = 2, lwd = 2)
+      abline(v = mean(r)+sd(r), col = "blue", lty = 2, lwd = 2)
+      lines(seq(0, max(r), by = 0.1), dnorm(seq(0, max(r), by = 0.1), mean(r),sd(r)),
+            lty = 1, lwd = 2, col = "blue")
+      abline(v = true_values[colu], col = "black", lty = 1, lwd = 2)
+    }
+    if(colu == 4 || colu == 5 || colu == 6){
+      abline(v = true_values[colu], col = "blue", lty = 2, lwd = 2)
+      abline(v = mean(r), col = "red", lty = 2, lwd = 2)
+      lines(seq(0, max(r), by = 0.1), dnorm(seq(0, max(r), by = 0.1), mean(r),sd(r)),
+            lty = 1, lwd = 2, col = "red")
+    }
 
-    abline(v = mean(r), col = "red", lty = 2, lwd = 2)
-    abline(v = quantile(r, c(0.5)), col = "blue", lty = 3, lwd = 2)
-    lines(seq(0, max(r), by = 0.1), dnorm(seq(0, max(r), by = 0.1), mean(r),sd(r)), lty = 1, lwd = 2)
     if(colu == 3){
-      legend("topright", legend = c("mean", "median", "normal", "density"),
-             col = c("red","blue","black", "white"), lty = c(2,3,1,1), lwd = 2, cex = 0.6)
-
+      legend("topright", legend = c("true value", "emp. mean", latex2exp::TeX("$\\pm$ emp. sd"), "normal density"),
+             col = c("black", "blue", "blue", "blue"), lty = c(1,1,2,1), lwd = 2, cex = 0.9)
+    }
+    if(colu == 6){
+      legend("topright", legend = c("empirical sd", "mean se", "normal density"),
+             col = c("blue", "red", "red"), lty = c(2,2,1), lwd = 2, cex = 0.9)
     }
   }
   dev.off()
-
-  # plotting again
-
-  par(mfrow = c(2,3), mar = c(4, 4, 3, 2), font.main = 1)
-  br = 30
-
-  for(colu in 1:6){
-    r = res[,colu]
-    hist(r,
-         xlim = c(0,max(r)),
-         main = mains[colu],
-         breaks = br, prob = T,
-         xlab = xlabels[colu])
-
-    abline(v = mean(r), col = "red", lty = 2, lwd = 2)
-    abline(v = quantile(r, c(0.5)), col = "blue", lty = 3, lwd = 2)
-    lines(seq(0, max(r), by = 0.1), dnorm(seq(0, max(r), by = 0.1), mean(r),sd(r)), lty = 1, lwd = 2)
-    if(colu == 3){
-      legend("topright", legend = c("mean", "median", "normal", "density"),
-             col = c("red","blue","black", "white"), lty = c(2,3,1,1), lwd = 2, cex = 0.6)
-
-    }
-  }
 }
 
