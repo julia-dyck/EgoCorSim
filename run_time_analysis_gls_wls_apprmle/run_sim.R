@@ -165,6 +165,9 @@ summary_res <- res %>%
     successful_est = sum(!is.na(nugget)) / n() * 100,  # percentage of successful estimates
     mean_runtime_sec = mean(as.numeric(run.time), na.rm = TRUE), # mean run time in seconds
     mean_memory_MB = mean(peak_RAM_MB, na.rm = TRUE), # mean peak RAM in MB
+    mean_nugget = mean(nugget, na.rm = TRUE), # mean nugget
+    mean_partial_sill = mean(partial.sill, na.rm = TRUE), # mean partial sill
+    mean_shape = mean(shape, na.rm = TRUE), # mean shape
     .groups = "drop"
   )
 
