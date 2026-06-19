@@ -96,7 +96,7 @@ par_uncertainty_check = function(vario.mod.output, mod.nr,
                            B = 1000, threshold.factor = c(1.1, 1.5, 2.0, 2.5, 3.0),
                            fit.method = 7){
 
-  unc = EgoCor::par.uncertainty2(vario.mod.output, mod.nr, par.est, data, max.dist, nbins,
+  unc = EgoCor::par.uncertainty(vario.mod.output, mod.nr, par.est, data, max.dist, nbins,
                                  B, threshold.factor, mc.cores = 1)
   est = c(unc$unc.table[1:3,1]$nugget, unc$unc.table[1:3,1]$partial.sill, unc$unc.table[1:3,1]$shape)
   names(est) = c("nugget", "partial.sill", "shape")
