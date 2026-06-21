@@ -91,27 +91,67 @@
 
 
 
-par_uncertainty_check = function(vario.mod.output, mod.nr,
-                           par.est = NULL, data= NULL, max.dist=NULL,nbins=NULL,
-                           B = 1000, threshold.factor = c(1.1, 1.5, 2.0, 2.5, 3.0),
-                           fit.method = 7){
+par_uncertainty_check <- function(vario.mod.output, mod.nr,
+                                  par.est = NULL, data = NULL,
+                                  max.dist = NULL, nbins = NULL,
+                                  B = 1000,
+                                  threshold.factor = c(1.1, 1.5, 2.0, 2.5, 3.0),
+                                  fit.method = 7) {
 
-  unc = EgoCor::par.uncertainty(vario.mod.output, mod.nr, par.est, data, max.dist, nbins,
-                                 B, threshold.factor, mc.cores = 1)
-  est = c(unc$unc.table[1:3,1]$nugget, unc$unc.table[1:3,1]$partial.sill, unc$unc.table[1:3,1]$shape)
-  names(est) = c("nugget", "partial.sill", "shape")
-  sds = unc$se
-  nr_reest = unc$nr_reest
+  unc <- EgoCor::par.uncertainty(
+    vario.mod.output, mod.nr, par.est, data, max.dist, nbins,
+    B, threshold.factor, mc.cores = 1
+  )
 
-  result = numeric(0)
-  for (i in 1:length(threshold.factor)){
-    result_i = c(sds[(i-1)*3 + 1:3], nr_reest[1,1], nr_reest[i,2], nr_reest[i,3])
-    names(result_i) = paste0(c("n.sd.check.", "ps.sd.check.", "s.sd.check.", "nr_reest_gstat", "nr_reest_thr", "nr_overlap"), threshold.factor)
-    result = c(result, result_i)
+  # unc.table: data.frame, 3*length(threshold.factor) rows x 2 cols
+  # Rows 1-3 = first tau block: nugget, partial.sill, shape estimates
+  # (Estimate is identical across all tau blocks, so row 1/2/3 suffices)
+  est <- unc$unc.table[1:3, "Estimate"]
+  names(est) <- c("nugget", "partial.sill", "shape")
+
+  sds      <- unc$se       # named vector, length = 3 * length(threshold.factor)
+  nr_reest <- unc$nr_reest # matrix, nrow = length(threshold.factor), ncol = 3
+
+  result <- numeric(0)
+  for (i in seq_along(threshold.factor)) {
+    result_i <- c(
+      sds[(i - 1) * 3 + 1:3],
+      nr_reest[i, 1],
+      nr_reest[i, 2],
+      nr_reest[i, 3]
+    )
+    names(result_i) <- paste0(
+      c("n.sd_check_", "ps.sd_check_", "s.sd_check_",
+        "nr_reest_gstat_check_", "nr_reest_thr_check_", "nr_overlap_check_"),
+      threshold.factor[i]
+    )
+    result <- c(result, result_i)
   }
   return(c(est, result))
 }
 
+#
+# par_uncertainty_check = function(vario.mod.output, mod.nr,
+#                            par.est = NULL, data= NULL, max.dist=NULL,nbins=NULL,
+#                            B = 1000, threshold.factor = c(1.1, 1.5, 2.0, 2.5, 3.0),
+#                            fit.method = 7){
+#
+#   unc = EgoCor::par.uncertainty(vario.mod.output, mod.nr, par.est, data, max.dist, nbins,
+#                                  B, threshold.factor, mc.cores = 1)
+#   est = c(unc$unc.table[1:3,1]$nugget, unc$unc.table[1:3,1]$partial.sill, unc$unc.table[1:3,1]$shape)
+#   names(est) = c("nugget", "partial.sill", "shape")
+#   sds = unc$se
+#   nr_reest = unc$nr_reest
+#
+#   result = numeric(0)
+#   for (i in 1:length(threshold.factor)){
+#     result_i = c(sds[(i-1)*3 + 1:3], nr_reest[1,1], nr_reest[i,2], nr_reest[i,3])
+#     names(result_i) = paste0(c("n.sd.check.", "ps.sd.check.", "s.sd.check.", "nr_reest_gstat", "nr_reest_thr", "nr_overlap"), threshold.factor)
+#     result = c(result, result_i)
+#   }
+#   return(c(est, result))
+# }
+#
 
 
 

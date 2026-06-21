@@ -3,7 +3,6 @@
 #' @param wd working directory were ALL the simulation files lie
 #' @param thr Threshold factor (here only scalar possible)
 #' @param path Path the the directory where plot is saved
-#' @param n_runs Number of seperate files for each scenario
 #' @param filter Vector for kicking out models
 #' @param graphic binary: if TRUE, histograms are produced; if FALSE, only summary of data base for histograms is returned
 #'
@@ -14,7 +13,6 @@
 summarise_check_hist = function(wd = "/Users/jan-ole/R/Boot",
                                 thr = 1.1,
                                 path = "/Users/jan-ole/R/Boot",
-                                n_runs = 10,
                                 filter = c(1000, 1000, 1000),
                                 kick_equal0 = F,
                                 graphic = T){
@@ -22,127 +20,66 @@ summarise_check_hist = function(wd = "/Users/jan-ole/R/Boot",
 
   # Loading the datasets ----------------------------------------------------
 
-  load(file = paste0("boot_result_500_1_457_", 1, ".RData"))
+  load(file = paste0("boot_result_500_1_457_", ".RData"))
   d1 = result
-  load(file = paste0("boot_result_500_1_624_", 1, ".RData"))
+  load(file = paste0("boot_result_500_1_624_", ".RData"))
   d2 = result
-  load(file = paste0("boot_result_500_1_832_", 1, ".RData"))
+  load(file = paste0("boot_result_500_1_832_", ".RData"))
   d3 = result
-  load(file = paste0("boot_result_500_4_457_", 1, ".RData"))
+  load(file = paste0("boot_result_500_4_457_", ".RData"))
   d4 = result
-  load(file = paste0("boot_result_500_4_624_", 1, ".RData"))
+  load(file = paste0("boot_result_500_4_624_", ".RData"))
   d5 = result
-  load(file = paste0("boot_result_500_4_832_", 1, ".RData"))
+  load(file = paste0("boot_result_500_4_832_", ".RData"))
   d6 = result
-  load(file = paste0("boot_result_500_9_457_", 1, ".RData"))
+  load(file = paste0("boot_result_500_9_457_", ".RData"))
   d7 = result
-  load(file = paste0("boot_result_500_9_624_", 1, ".RData"))
+  load(file = paste0("boot_result_500_9_624_", ".RData"))
   d8 = result
-  load(file = paste0("boot_result_500_9_832_", 1, ".RData"))
+  load(file = paste0("boot_result_500_9_832_", ".RData"))
   d9 = result
 
-  load(file = paste0("boot_result_1000_1_457_", 1, ".RData"))
+  load(file = paste0("boot_result_1000_1_457_", ".RData"))
   d10 = result
-  load(file = paste0("boot_result_1000_1_624_", 1, ".RData"))
+  load(file = paste0("boot_result_1000_1_624_", ".RData"))
   d11 = result
-  load(file = paste0("boot_result_1000_1_832_", 1, ".RData"))
+  load(file = paste0("boot_result_1000_1_832_", ".RData"))
   d12 = result
-  load(file = paste0("boot_result_1000_4_457_", 1, ".RData"))
+  load(file = paste0("boot_result_1000_4_457_", ".RData"))
   d13 = result
-  load(file = paste0("boot_result_1000_4_624_", 1, ".RData"))
+  load(file = paste0("boot_result_1000_4_624_", ".RData"))
   d14 = result
-  load(file = paste0("boot_result_1000_4_832_", 1, ".RData"))
+  load(file = paste0("boot_result_1000_4_832_", ".RData"))
   d15 = result
-  load(file = paste0("boot_result_1000_9_457_", 1, ".RData"))
+  load(file = paste0("boot_result_1000_9_457_", ".RData"))
   d16 = result
-  load(file = paste0("boot_result_1000_9_624_", 1, ".RData"))
+  load(file = paste0("boot_result_1000_9_624_", ".RData"))
   d17 = result
-  load(file = paste0("boot_result_1000_9_832_", 1, ".RData"))
+  load(file = paste0("boot_result_1000_9_832_", ".RData"))
   d18 = result
 
-  load(file = paste0("boot_result_2000_1_457_", 1, ".RData"))
+  load(file = paste0("boot_result_2000_1_457_", ".RData"))
   d19 = result
-  load(file = paste0("boot_result_2000_1_624_", 1, ".RData"))
+  load(file = paste0("boot_result_2000_1_624_", ".RData"))
   d20 = result
-  load(file = paste0("boot_result_2000_1_832_", 1, ".RData"))
+  load(file = paste0("boot_result_2000_1_832_", ".RData"))
   d21 = result
-  load(file = paste0("boot_result_2000_4_457_", 1, ".RData"))
+  load(file = paste0("boot_result_2000_4_457_", ".RData"))
   d22 = result
-  load(file = paste0("boot_result_2000_4_624_", 1, ".RData"))
+  load(file = paste0("boot_result_2000_4_624_", ".RData"))
   d23 = result
-  load(file = paste0("boot_result_2000_4_832_", 1, ".RData"))
+  load(file = paste0("boot_result_2000_4_832_", ".RData"))
   d24 = result
-  load(file = paste0("boot_result_2000_9_457_", 1, ".RData"))
+  load(file = paste0("boot_result_2000_9_457_", ".RData"))
   d25 = result
-  load(file = paste0("boot_result_2000_9_624_", 1, ".RData"))
+  load(file = paste0("boot_result_2000_9_624_", ".RData"))
   d26 = result
-  load(file = paste0("boot_result_2000_9_832_", 1, ".RData"))
+  load(file = paste0("boot_result_2000_9_832_", ".RData"))
   d27 = result
 
   data = rbind(d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,d14,d15,d16,d17,d18,d19,d20,d21,d22,d23,d24,d25,d26,d27)
 
-  for (i in 2:n_runs){
-    load(file = paste0("boot_result_500_1_457_", i, ".RData"))
-    d1 = result
-    load(file = paste0("boot_result_500_1_624_", i, ".RData"))
-    d2 = result
-    load(file = paste0("boot_result_500_1_832_", i, ".RData"))
-    d3 = result
-    load(file = paste0("boot_result_500_4_457_", i, ".RData"))
-    d4 = result
-    load(file = paste0("boot_result_500_4_624_", i, ".RData"))
-    d5 = result
-    load(file = paste0("boot_result_500_4_832_", i, ".RData"))
-    d6 = result
-    load(file = paste0("boot_result_500_9_457_", i, ".RData"))
-    d7 = result
-    load(file = paste0("boot_result_500_9_624_", i, ".RData"))
-    d8 = result
-    load(file = paste0("boot_result_500_9_832_", i, ".RData"))
-    d9 = result
 
-    load(file = paste0("boot_result_1000_1_457_", i, ".RData"))
-    d10 = result
-    load(file = paste0("boot_result_1000_1_624_", i, ".RData"))
-    d11 = result
-    load(file = paste0("boot_result_1000_1_832_", i, ".RData"))
-    d12 = result
-    load(file = paste0("boot_result_1000_4_457_", i, ".RData"))
-    d13 = result
-    load(file = paste0("boot_result_1000_4_624_", i, ".RData"))
-    d14 = result
-    load(file = paste0("boot_result_1000_4_832_", i, ".RData"))
-    d15 = result
-    load(file = paste0("boot_result_1000_9_457_", i, ".RData"))
-    d16 = result
-    load(file = paste0("boot_result_1000_9_624_", i, ".RData"))
-    d17 = result
-    load(file = paste0("boot_result_1000_9_832_", i, ".RData"))
-    d18 = result
-
-    load(file = paste0("boot_result_2000_1_457_", i, ".RData"))
-    d19 = result
-    load(file = paste0("boot_result_2000_1_624_", i, ".RData"))
-    d20 = result
-    load(file = paste0("boot_result_2000_1_832_", i, ".RData"))
-    d21 = result
-    load(file = paste0("boot_result_2000_4_457_", i, ".RData"))
-    d22 = result
-    load(file = paste0("boot_result_2000_4_624_", i, ".RData"))
-    d23 = result
-    load(file = paste0("boot_result_2000_4_832_", i, ".RData"))
-    d24 = result
-    load(file = paste0("boot_result_2000_9_457_", i, ".RData"))
-    d25 = result
-    load(file = paste0("boot_result_2000_9_624_", i, ".RData"))
-    d26 = result
-    load(file = paste0("boot_result_2000_9_832_", i, ".RData"))
-    d27 = result
-
-    d = rbind(d1,d2,d3,d4,d5,d6,d7,d8,d9,d10,d11,d12,d13,d14,d15,d16,d17,d18,d19,d20,d21,d22,d23,d24,d25,d26,d27)
-
-    data = rbind(data, d)
-  }
 
   # Loading data completed --------------------------------------------------
 

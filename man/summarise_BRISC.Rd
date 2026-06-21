@@ -10,7 +10,6 @@ summarise_BRISC(
   density = NULL,
   max.dist = NULL,
   param,
-  n_runs = 10,
   filter = c(1000, 1000, 1000),
   kick_equal0 = F
 )
@@ -25,8 +24,6 @@ summarise_BRISC(
 \item{max.dist}{Maximum distance (457, 624, 832)}
 
 \item{param}{Selects the desired parameter (1 = nugget, 2 = partial_sill, 3 = shape)}
-
-\item{n_runs}{Number of seperate files for each scenario}
 
 \item{filter}{Vector for kicking out models}
 }

@@ -10,7 +10,7 @@ one_scenario(
   nbins,
   B = 1000,
   threshold.factor = c(1.1, 1.2, 1.5, 2, 2.5, 3),
-  qu = seq(from = 0.75, to = 1, by = 0.05),
+  qu = seq(from = 1, to = 0.75, by = 0.05),
   n_sim
 )
 }

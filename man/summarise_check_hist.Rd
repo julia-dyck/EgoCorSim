@@ -8,9 +8,9 @@ summarise_check_hist(
   wd = "/Users/jan-ole/R/Boot",
   thr = 1.1,
   path = "/Users/jan-ole/R/Boot",
-  n_runs = 10,
   filter = c(1000, 1000, 1000),
-  kick_equal0 = F
+  kick_equal0 = F,
+  graphic = T
 )
 }
 \arguments{
@@ -20,9 +20,9 @@ summarise_check_hist(
 
 \item{path}{Path the the directory where plot is saved}
 
-\item{n_runs}{Number of seperate files for each scenario}
-
 \item{filter}{Vector for kicking out models}
+
+\item{graphic}{binary: if TRUE, histograms are produced; if FALSE, only summary of data base for histograms is returned}
 }
 \value{
 Returns a list containing the n's and the result

@@ -4,7 +4,7 @@
 \alias{make_table}
 \title{Creating result table for simulation study fast}
 \usage{
-make_table(wd, param, method = "check", n_runs, kick_equal0)
+make_table(wd, param, method = "check", kick_equal0)
 }
 \arguments{
 \item{wd}{working directory were ALL the simulation files lie}
@@ -12,8 +12,6 @@ make_table(wd, param, method = "check", n_runs, kick_equal0)
 \item{param}{Selects the desired parameter (1 = nugget, 2 = partial_sill, 3 = shape)}
 
 \item{method}{one of c("check", "quantile", "brisc")}
-
-\item{n_runs}{Number of seperate files for each scenario (this needs to fit to the largest integer at the end of the file names)}
 }
 \value{
 A LaTeX-ready version of the table is printed. The full table is also returned invisibly.

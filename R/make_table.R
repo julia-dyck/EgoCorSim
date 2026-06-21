@@ -3,13 +3,12 @@
 #' @param wd working directory were ALL the simulation files lie
 #' @param param Selects the desired parameter (1 = nugget, 2 = partial_sill, 3 = shape)
 #' @param method one of c("check", "quantile", "brisc")
-#' @param n_runs Number of seperate files for each scenario (this needs to fit to the largest integer at the end of the file names)
 #'
 #' @return A LaTeX-ready version of the table is printed. The full table is also returned invisibly.
 #' @export
 #'
 #' @examples
-make_table = function(wd, param, method = "check", n_runs, kick_equal0){
+make_table = function(wd, param, method = "check", kick_equal0){
   N = c(500, 1000, 2000)
   dens = c(1, 4, 9)
   max.dist = c(457, 624, 832)
@@ -24,7 +23,7 @@ make_table = function(wd, param, method = "check", n_runs, kick_equal0){
   if(method == "check"){
     N_table = matrix(data = NA, 3, 8)
     for (i in 1:length(N)){
-      result = summarise_check(wd = wd, N = N[i], param = param, n_runs = n_runs, kick_equal0 = kick_equal0)
+      result = summarise_check(wd = wd, N = N[i], param = param, kick_equal0 = kick_equal0)
       N_table[i,] = c(result$result, result$n)
     }
     colnames(N_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
@@ -32,7 +31,7 @@ make_table = function(wd, param, method = "check", n_runs, kick_equal0){
 
     density_table = matrix(data = NA, 3, 8)
     for (i in 1:length(dens)){
-      result = summarise_check(wd = wd, density = dens[i], param = param, n_runs = n_runs, kick_equal0 = kick_equal0)
+      result = summarise_check(wd = wd, density = dens[i], param = param, kick_equal0 = kick_equal0)
       density_table[i,] = c(result$result, result$n)
     }
     colnames(density_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
@@ -40,7 +39,7 @@ make_table = function(wd, param, method = "check", n_runs, kick_equal0){
 
     max.dist_table = matrix(data = NA, 3, 8)
     for (i in 1:length(max.dist)){
-      result = summarise_check(wd = wd, max.dist = max.dist[i], param = param, n_runs = n_runs, kick_equal0 = kick_equal0)
+      result = summarise_check(wd = wd, max.dist = max.dist[i], param = param, kick_equal0 = kick_equal0)
       max.dist_table[i,] = c(result$result, result$n)
     }
     colnames(max.dist_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
@@ -48,7 +47,7 @@ make_table = function(wd, param, method = "check", n_runs, kick_equal0){
 
     threshold_table = matrix(data = NA, 6, 8)
     for (i in 1:length(threshold)){
-      result = summarise_check(wd = wd, thr = threshold[i], param = param, n_runs = n_runs, kick_equal0 = kick_equal0)
+      result = summarise_check(wd = wd, thr = threshold[i], param = param, kick_equal0 = kick_equal0)
       threshold_table[i,] = c(result$result, result$n)
     }
     colnames(threshold_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
@@ -103,7 +102,7 @@ make_table = function(wd, param, method = "check", n_runs, kick_equal0){
   if(method == "quantile"){
     N_table = matrix(data = NA, 3, 8)
     for (i in 1:length(N)){
-      result = summarise_q(wd = wd, N = N[i], param = param, n_runs = n_runs, kick_equal0 = kick_equal0)
+      result = summarise_q(wd = wd, N = N[i], param = param, kick_equal0 = kick_equal0)
       N_table[i,] = c(result$result, result$n)
     }
     colnames(N_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
@@ -111,7 +110,7 @@ make_table = function(wd, param, method = "check", n_runs, kick_equal0){
 
     density_table = matrix(data = NA, 3, 8)
     for (i in 1:length(dens)){
-      result = summarise_q(wd = wd, density = dens[i], param = param, n_runs = n_runs, kick_equal0 = kick_equal0)
+      result = summarise_q(wd = wd, density = dens[i], param = param, kick_equal0 = kick_equal0)
       density_table[i,] = c(result$result, result$n)
     }
     colnames(density_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
@@ -119,7 +118,7 @@ make_table = function(wd, param, method = "check", n_runs, kick_equal0){
 
     max.dist_table = matrix(data = NA, 3, 8)
     for (i in 1:length(max.dist)){
-      result = summarise_q(wd = wd, max.dist = max.dist[i], param = param, n_runs = n_runs, kick_equal0 = kick_equal0)
+      result = summarise_q(wd = wd, max.dist = max.dist[i], param = param, kick_equal0 = kick_equal0)
       max.dist_table[i,] = c(result$result, result$n)
     }
     colnames(max.dist_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
@@ -127,7 +126,7 @@ make_table = function(wd, param, method = "check", n_runs, kick_equal0){
 
     qu_table = matrix(data = NA, 6, 8)
     for (i in 1:length(qu)){
-      result = summarise_q(wd = wd, qu = qu[i], param = param, n_runs = n_runs, kick_equal0 = kick_equal0)
+      result = summarise_q(wd = wd, qu = qu[i], param = param, kick_equal0 = kick_equal0)
       qu_table[i,] = c(result$result, result$n)
     }
     colnames(qu_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
@@ -155,7 +154,7 @@ make_table = function(wd, param, method = "check", n_runs, kick_equal0){
     add = list()
     add$pos = list(0,3,6,9)
     add$command = paste0("\\hline \n \\multicolumn{", 5, "}{|l|}{\\textbf{$\\varnothing$ grouped by ", ps, "}} \\\\ \n")
-    thecaption = paste("Check Filter Method - Performance measure results for the", parameter[param],"effect", "$", p_symbol[param], "$", "grouped by sample size, sample density, maximal distance factor and tuning parameter $\\alpha$.")
+    thecaption = paste("Quantile Filter Method - Performance measure results for the", parameter[param],"effect", "$", p_symbol[param], "$", "grouped by sample size, sample density, maximal distance factor and tuning parameter $\\alpha$.")
 
     print(xtable::xtable(table, digits = rep(4,6), # first zero "represents" row numbers which we skip later
                          align = "r|L{2cm}R{3.5cm}R{3cm}R{2cm}R{2cm}|",  # align and put a vertical line (first "l" again represents column of row numbers)
@@ -182,7 +181,7 @@ make_table = function(wd, param, method = "check", n_runs, kick_equal0){
   if(method == "brisc"){
     N_table = matrix(data = NA, 3, 8)
     for (i in 1:length(N)){
-      result = summarise_BRISC(wd = wd, N = N[i], param = param, n_runs = n_runs, kick_equal0 = kick_equal0)
+      result = summarise_BRISC(wd = wd, N = N[i], param = param, kick_equal0 = kick_equal0)
       N_table[i,] = c(result$result, result$n)
     }
     colnames(N_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
@@ -190,7 +189,7 @@ make_table = function(wd, param, method = "check", n_runs, kick_equal0){
 
     density_table = matrix(data = NA, 3, 8)
     for (i in 1:length(dens)){
-      result = summarise_BRISC(wd = wd, density = dens[i], param = param, n_runs = n_runs, kick_equal0 = kick_equal0)
+      result = summarise_BRISC(wd = wd, density = dens[i], param = param, kick_equal0 = kick_equal0)
       density_table[i,] = c(result$result, result$n)
     }
     colnames(density_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
@@ -198,7 +197,7 @@ make_table = function(wd, param, method = "check", n_runs, kick_equal0){
 
     max.dist_table = matrix(data = NA, 3, 8)
     for (i in 1:length(max.dist)){
-      result = summarise_BRISC(wd = wd, max.dist = max.dist[i], param = param, n_runs = n_runs, kick_equal0 = kick_equal0)
+      result = summarise_BRISC(wd = wd, max.dist = max.dist[i], param = param, kick_equal0 = kick_equal0)
       max.dist_table[i,] = c(result$result, result$n)
     }
     colnames(max.dist_table) = c("Monte Carlo SE", "sd(Monte Carlo SE)", "empirical SE", "sd(empirical SE)", "bias", "MSE", "n_sim", "n_sim_tilde")
@@ -211,7 +210,7 @@ make_table = function(wd, param, method = "check", n_runs, kick_equal0){
     table = rbind(N_table, density_table, max.dist_table)
     table = as.data.frame(table[,1:6])
     table = cbind(
-      grouping_paramter = c(as.character(N), as.character(dens), c("1.1", "1.5", "2.0"), as.character(threshold)),
+      grouping_paramter = c(as.character(N), as.character(dens), c("1.1", "1.5", "2.0")),
       paste0(round(table[,1], 2)," (", round(table[,2], 4),")"),
       paste0(round(table[,3], 2)," (", round(table[,4], 4),")"),
       round(table[,5], 4), round(table[,6], 4)
